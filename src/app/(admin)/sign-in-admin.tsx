@@ -34,20 +34,33 @@ export default function Index() {
 
       {/* Título */}
       <Text
-        className="text-white text-2xl font-zona-bold mb-2"
+        className="text-zinc-100 text-2xl font-zona-bold mb-2"
         style={{ fontSize: width * 0.06 }}
       >
         Boas vindas!
       </Text>
-      <Text className="text-gray-400 mb-6" style={{ fontSize: width * 0.04 }}>
-        Faca seu login para acessar o planner
+      <Text
+        className="text-zinc-400 mb-6 text-center"
+        style={{ fontSize: width * 0.04 }}
+      >
+        Faca seu login para acessar o painel administrativo
       </Text>
+
+      <TextInput
+        placeholder="Código de acesso"
+        placeholderTextColor="#ccc"
+        className="w-full h-12 bg-zinc-800 text-zinc-100 rounded-lg px-4 mb-4"
+        accessibilityLabel="Campo de código de acesso"
+        accessibilityHint="Digite o código de acesso"
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
 
       {/* Input de email */}
       <TextInput
         placeholder="Email"
         placeholderTextColor="#ccc"
-        className="w-full h-12 bg-gray-800 text-white rounded-lg px-4 mb-4"
+        className="w-full h-12 bg-zinc-800 text-zinc-100 rounded-lg px-4 mb-4"
         accessibilityLabel="Campo de email"
         accessibilityHint="Digite seu endereço de email"
         keyboardType="email-address"
@@ -59,7 +72,7 @@ export default function Index() {
         placeholder="Senha"
         placeholderTextColor="#ccc"
         secureTextEntry
-        className="w-full h-12 bg-gray-800 text-white rounded-lg px-4 mb-6"
+        className="w-full h-12 bg-zinc-800 text-zinc-100 rounded-lg px-4 mb-6"
         accessibilityLabel="Campo de senha"
         accessibilityHint="Digite sua senha"
         autoCapitalize="none"
@@ -75,14 +88,14 @@ export default function Index() {
         onPress={handleLogin}
       >
         <Text
-          className="text-white text-lg font-zona-bold"
+          className="text-zinc-100 text-lg font-zona-bold"
           style={{ fontSize: width * 0.05 }}
         >
           Acessar
         </Text>
       </TouchableOpacity>
 
-      <Link href="/sign-in-admin" asChild>
+      <Link href="/" asChild>
         <TouchableOpacity
           className="mt-4"
           accessibilityRole="link"
@@ -91,10 +104,10 @@ export default function Index() {
           activeOpacity={0.8}
         >
           <Text
-            className="text-gray-400 text-sm font-zona-regular"
+            className="text-zinc-400 text-sm font-zona-regular"
             style={{ fontSize: width * 0.035 }}
           >
-            Acesse como administrador
+            Acesse como usuário
           </Text>
         </TouchableOpacity>
       </Link>
