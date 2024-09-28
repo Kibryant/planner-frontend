@@ -47,7 +47,7 @@ export default function Index() {
       <TextInput
         placeholder="Email"
         placeholderTextColor="#ccc"
-        className="w-full h-12 bg-gray-800 text-white rounded-lg px-4 mb-4"
+        className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4 mb-4"
         accessibilityLabel="Campo de email"
         accessibilityHint="Digite seu endereço de email"
         keyboardType="email-address"
@@ -59,7 +59,7 @@ export default function Index() {
         placeholder="Senha"
         placeholderTextColor="#ccc"
         secureTextEntry
-        className="w-full h-12 bg-gray-800 text-white rounded-lg px-4 mb-6"
+        className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4 mb-6"
         accessibilityLabel="Campo de senha"
         accessibilityHint="Digite sua senha"
         autoCapitalize="none"

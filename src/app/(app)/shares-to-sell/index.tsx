@@ -1,3 +1,4 @@
+import { BottomButton } from "@/components/bottom-button";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, router } from "expo-router";
 import {
@@ -15,7 +16,7 @@ const { width } = Dimensions.get("window");
 export default function SharesToSellr() {
   return (
     <SafeAreaView className="flex-1 bg-black">
-      <View className="flex-1 p-4">
+      <View className="flex-1 px-4">
         <View className="flex-row items-center justify-between py-4">
           <TouchableOpacity onPress={() => router.back()}>
             <Ionicons name="arrow-back-sharp" size={28} color="#fb005d" />
@@ -78,16 +79,7 @@ export default function SharesToSellr() {
           </View>
         </ScrollView>
 
-        <View className="mt-10 items-center">
-          <TouchableOpacity
-            className="bg-primary border-2 border-zinc-100 w-16 h-16 rounded-full justify-center items-center"
-            accessibilityLabel="Botão Home"
-            accessibilityHint="Clique para voltar para o menu principal"
-            activeOpacity={0.8}
-          >
-            <Ionicons name="home" size={32} color="#f4f4f5" />
-          </TouchableOpacity>
-        </View>
+        <BottomButton />
       </View>
     </SafeAreaView>
   );
