@@ -1,5 +1,5 @@
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
-import { Href, Link } from "expo-router";
+import { type Href, Link } from "expo-router";
 import { TouchableOpacity, View, Text } from "react-native";
 
 interface CardProps {

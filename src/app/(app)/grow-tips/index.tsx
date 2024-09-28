@@ -1,3 +1,4 @@
+import { BottomButton } from "@/components/bottom-button";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -21,11 +22,13 @@ export default function GrowTips() {
     { id: 4, texto: "Decorar o salão para entrar no clima da data" },
     { id: 5, texto: "Se preparar para criar e divulgar as ações" },
     { id: 6, texto: "Evitar baixar preços unitários" },
+    { id: 7, texto: "Oferecer combos e pacotes" },
+    { id: 8, texto: "Fazer promoções relâmpago" },
   ];
 
   return (
     <SafeAreaView className="flex-1 bg-black">
-      <View className="flex-1 p-4">
+      <View className="flex-1 px-8">
         <View className="flex-row items-center justify-between py-4">
           <TouchableOpacity onPress={() => router.back()}>
             <Ionicons name="arrow-back-sharp" size={28} color="#fb005d" />
@@ -54,7 +57,7 @@ export default function GrowTips() {
                   {dica.id}
                 </Text>
               </View>
-              <Text className="text-zinc-100 text-lg flex-1 font-zona-semibold">
+              <Text className="text-zinc-100 flex-1 font-zona-semibold">
                 {dica.texto}
               </Text>
             </View>
@@ -62,16 +65,7 @@ export default function GrowTips() {
         </ScrollView>
       </View>
 
-      <View className="mt-10 items-center">
-        <TouchableOpacity
-          className="bg-primary border-2 border-zinc-100 w-16 h-16 rounded-full justify-center items-center"
-          accessibilityLabel="Botão Home"
-          accessibilityHint="Clique para voltar para o menu principal"
-          activeOpacity={0.8}
-        >
-          <Ionicons name="home" size={32} color="#f4f4f5" />
-        </TouchableOpacity>
-      </View>
+      <BottomButton />
     </SafeAreaView>
   );
 }

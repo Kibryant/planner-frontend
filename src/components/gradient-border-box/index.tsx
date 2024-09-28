@@ -16,7 +16,7 @@ export default function GradientBorderBox() {
         padding: 1,
         borderRadius: 12,
         height: 160,
-        marginBottom: 12,
+        marginBottom: 8,
       }}
     >
       <Link href="/shares-to-sell" asChild>

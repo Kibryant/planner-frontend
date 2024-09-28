@@ -44,6 +44,13 @@ export default function Layout() {
           headerShown: false,
         }}
       />
+
+      <Stack.Screen
+        name="billing-goal/index"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
