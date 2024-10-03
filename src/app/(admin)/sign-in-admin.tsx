@@ -1,6 +1,14 @@
 import { logoHorizontal } from "@/constants/logo-horizontal";
-import { Link, router } from "expo-router";
+import {
+  type AdminLoginSchema,
+  adminLoginSchema,
+} from "@/schema/admin-login-schema";
+import { useAdminStore } from "@/store/admin-store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Link, Redirect, router } from "expo-router";
 import React from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
   View,
   Text,
@@ -8,109 +16,194 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
+import Toast from "react-native-toast-message";
 
 const { width, height } = Dimensions.get("window");
 
 export default function Index() {
-  const handleLogin = () => {
-    router.push("/home");
+  const { login, admin } = useAdminStore();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AdminLoginSchema>({
+    resolver: zodResolver(adminLoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      accessCode: "",
+    },
+  });
+
+  const mutation = useMutation({
+    mutationKey: ["admin-login"],
+    mutationFn: login,
+    onError: (error) => {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao fazer login",
+        text2: error.message,
+      });
+    },
+    onSuccess: () => {
+      router.replace("/admin");
+    },
+  });
+
+  const handleLogin = (data: AdminLoginSchema) => {
+    console.log(data);
+    mutation.mutate(data);
   };
 
+  if (admin) {
+    return <Redirect href="/admin" />;
+  }
+
   return (
-    <View
-      className="flex-1 bg-black justify-center items-center px-8"
-      style={{ paddingHorizontal: width * 0.05 }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
-      {/* Logo */}
-      <View className="mb-12" style={{ marginBottom: height * 0.05 }}>
-        <Image
-          source={logoHorizontal} // Substitua pela logo correta
-          className="w-[265.54px] h-[111.38px]"
-          resizeMode="contain"
-          accessibilityLabel="Logo da Mecha Turbo"
-        />
-      </View>
-
-      {/* Título */}
-      <Text
-        className="text-zinc-100 text-2xl font-zona-bold mb-2"
-        style={{ fontSize: width * 0.06 }}
-      >
-        Boas vindas!
-      </Text>
-      <Text
-        className="text-zinc-400 mb-6 text-center"
-        style={{ fontSize: width * 0.04 }}
-      >
-        Faca seu login para acessar o painel administrativo
-      </Text>
-
-      <TextInput
-        placeholder="Código de acesso"
-        placeholderTextColor="#ccc"
-        className="w-full h-12 bg-zinc-800 text-zinc-100 rounded-lg px-4 mb-4"
-        accessibilityLabel="Campo de código de acesso"
-        accessibilityHint="Digite o código de acesso"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-
-      {/* Input de email */}
-      <TextInput
-        placeholder="Email"
-        placeholderTextColor="#ccc"
-        className="w-full h-12 bg-zinc-800 text-zinc-100 rounded-lg px-4 mb-4"
-        accessibilityLabel="Campo de email"
-        accessibilityHint="Digite seu endereço de email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-
-      {/* Input de senha */}
-      <TextInput
-        placeholder="Senha"
-        placeholderTextColor="#ccc"
-        secureTextEntry
-        className="w-full h-12 bg-zinc-800 text-zinc-100 rounded-lg px-4 mb-6"
-        accessibilityLabel="Campo de senha"
-        accessibilityHint="Digite sua senha"
-        autoCapitalize="none"
-      />
-
-      {/* Botão de login */}
-      <TouchableOpacity
-        className="w-full h-12 bg-primary rounded-lg justify-center items-center"
-        accessibilityRole="button"
-        accessibilityLabel="Botão de acessar"
-        accessibilityHint="Clique para fazer login"
-        activeOpacity={0.8}
-        onPress={handleLogin}
-      >
-        <Text
-          className="text-zinc-100 text-lg font-zona-bold"
-          style={{ fontSize: width * 0.05 }}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View
+          className="flex-1 bg-black justify-center items-center px-8"
+          style={{ paddingHorizontal: width * 0.05 }}
         >
-          Acessar
-        </Text>
-      </TouchableOpacity>
+          <View className="mb-12" style={{ marginBottom: height * 0.05 }}>
+            <Image
+              source={logoHorizontal} // Substitua pela logo correta
+              className="w-[265.54px] h-[111.38px]"
+              resizeMode="contain"
+              accessibilityLabel="Logo da Mecha Turbo"
+            />
+          </View>
 
-      <Link href="/" asChild>
-        <TouchableOpacity
-          className="mt-4"
-          accessibilityRole="link"
-          accessibilityLabel="Acesse como administrador"
-          accessibilityHint="Clique para acessar como administrador"
-          activeOpacity={0.8}
-        >
           <Text
-            className="text-zinc-400 text-sm font-zona-regular"
-            style={{ fontSize: width * 0.035 }}
+            className="text-zinc-100 text-2xl font-zona-bold mb-2"
+            style={{ fontSize: width * 0.06 }}
           >
-            Acesse como usuário
+            Boas vindas!
           </Text>
-        </TouchableOpacity>
-      </Link>
-    </View>
+          <Text
+            className="text-zinc-400 mb-6 text-center"
+            style={{ fontSize: width * 0.04 }}
+          >
+            Faca seu login para acessar o painel administrativo
+          </Text>
+          <View className="w-full mb-2">
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur } }) => (
+                <TextInput
+                  className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4"
+                  placeholder="Código de acesso"
+                  keyboardType="number-pad"
+                  accessibilityLabel="Código de acesso"
+                  placeholderTextColor="#ccc"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                />
+              )}
+              name="accessCode"
+            />
+            {errors.accessCode && (
+              <Text className="text-red-500 font-zona-regular text-sm mb-2">
+                {errors.accessCode.message}
+              </Text>
+            )}
+          </View>
+
+          <View className="w-full mb-2">
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur } }) => (
+                <TextInput
+                  className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4"
+                  placeholder="Email"
+                  keyboardType="email-address"
+                  accessibilityLabel="Email"
+                  placeholderTextColor="#ccc"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                />
+              )}
+              name="email"
+            />
+            {errors.email && (
+              <Text className="text-red-500 font-zona-regular text-sm mb-2">
+                x {errors.email.message}
+              </Text>
+            )}
+          </View>
+
+          <View className="w-full mb-2">
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur } }) => (
+                <TextInput
+                  className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4"
+                  placeholder="Senha"
+                  secureTextEntry
+                  accessibilityLabel="Senha"
+                  placeholderTextColor="#ccc"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                />
+              )}
+              name="password"
+            />
+            {errors.password && (
+              <Text className="text-red-500 font-zona-regular text-sm mb-2">
+                {errors.password.message}
+              </Text>
+            )}
+          </View>
+
+          <TouchableOpacity
+            className={`w-full h-12 rounded-lg justify-center items-center ${
+              mutation.isPending ? "bg-primary/80" : "bg-primary"
+            }`}
+            accessibilityRole="button"
+            accessibilityLabel="Botão de acessar"
+            accessibilityHint="Clique para fazer login"
+            activeOpacity={0.8}
+            onPress={handleSubmit(handleLogin)}
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? (
+              <ActivityIndicator size="small" color="#ffffff" />
+            ) : (
+              <Text className="text-center text-white font-zona-bold">
+                Acessar
+              </Text>
+            )}
+          </TouchableOpacity>
+
+          <Link href="/" asChild>
+            <TouchableOpacity
+              className="mt-4"
+              accessibilityRole="link"
+              accessibilityLabel="Acesse como administrador"
+              accessibilityHint="Clique para acessar como administrador"
+              activeOpacity={0.8}
+            >
+              <Text
+                className="text-zinc-400 text-sm font-zona-regular"
+                style={{ fontSize: width * 0.035 }}
+              >
+                Acesse como usuário
+              </Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }

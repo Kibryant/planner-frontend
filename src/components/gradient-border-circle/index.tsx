@@ -1,10 +1,21 @@
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
 import { Text, TouchableOpacity } from "react-native";
 
 interface GradientBorderCircleProps {
   day: string;
 }
+
+const backgroundIcon = [
+  "sun",
+  "calendar",
+  "cloud",
+  "cloud-rain",
+  "cloud-snow",
+  "cloud-lightning",
+  "moon",
+];
 
 export function GradientBorderCircle({ day }: GradientBorderCircleProps) {
   return (
@@ -20,7 +31,7 @@ export function GradientBorderCircle({ day }: GradientBorderCircleProps) {
       }}
     >
       <Feather
-        name="figma"
+        name={backgroundIcon[Math.floor(Math.random() * backgroundIcon.length)]}
         size={40}
         color="#FF005E"
         style={{
@@ -31,12 +42,14 @@ export function GradientBorderCircle({ day }: GradientBorderCircleProps) {
         }}
       />
 
-      <TouchableOpacity
-        key={day}
-        className="bg-[#4F001DE0] flex-1 rounded-full flex items-center justify-center"
-      >
-        <Text className="text-zinc-100 text-base font-zona-bold">{day}</Text>
-      </TouchableOpacity>
+      <Link href={`/post-planning/${day}`} asChild>
+        <TouchableOpacity
+          key={day}
+          className="bg-[#4F001DE0] flex-1 rounded-full flex items-center justify-center"
+        >
+          <Text className="text-zinc-100 text-base font-zona-bold">{day}</Text>
+        </TouchableOpacity>
+      </Link>
     </LinearGradient>
   );
 }

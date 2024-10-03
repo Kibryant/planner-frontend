@@ -1,1 +1,1 @@
-export const logoHorizontal = require('../assets/images/logo-horizontal.png')
+export const logoHorizontal = require("../assets/images/logo-horizontal.png");

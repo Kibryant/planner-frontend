@@ -28,7 +28,15 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Você precisa permitir o acesso às fotos para poder adicionar imagens ao seu plano de estudos.",
+          "savePhotosPermission": "Você precisa permitir o acesso às fotos para poder adicionar imagens ao seu plano de estudos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
