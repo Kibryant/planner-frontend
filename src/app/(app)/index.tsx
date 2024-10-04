@@ -60,12 +60,12 @@ export default function Home() {
         {admin && (
           <Link href="/admin" asChild>
             <TouchableOpacity
-              className="bg-zinc-100 w-20 h-16 rounded-full justify-center items-center border-4 border-primary"
+              className="w-20 h-16 rounded-full justify-center items-center border-2 border-primary"
               accessibilityLabel="Botão Sair"
               accessibilityHint="Clique para sair do painel de administração"
               activeOpacity={0.8}
             >
-              <Text className="text-[6.5px] font-zona-bold text-primary text-center">
+              <Text className="text-[6.5px] font-zona-bold text-zinc-100 text-center">
                 Voltar ao painel administrativo
               </Text>
             </TouchableOpacity>

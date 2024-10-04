@@ -12,34 +12,29 @@ import { LinearGradient } from "expo-linear-gradient";
 import type { MONTHS } from "@/constants/months";
 import { Feather } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
-import { useAsyncStorage } from "@/hooks/useAsyncStorage";
 import Toast from "react-native-toast-message";
-import { isValidJson } from "@/lib/utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HttpStatusCode } from "axios";
+import { api } from "@/lib/api";
 
 interface ActionsProps {
   MONTH: (typeof MONTHS)[keyof typeof MONTHS];
   monthBr: string;
   selectedMonthEn: (typeof MONTHS)[keyof typeof MONTHS];
+  token: string;
+  userId: string;
+  actions: string[];
 }
 
-interface ActionObject {
-  action: string;
-  month: (typeof MONTHS)[keyof typeof MONTHS] | null;
-}
-
-export function Actions({ MONTH, monthBr, selectedMonthEn }: ActionsProps) {
-  const [{ loading, value: actionsString }, setActionsString] = useAsyncStorage(
-    `actions-${selectedMonthEn}`,
-  );
-
-  const [actions, setActions] = useState<
-    [ActionObject, ActionObject, ActionObject, ActionObject]
-  >([
-    { action: "", month: null },
-    { action: "", month: null },
-    { action: "", month: null },
-    { action: "", month: null },
-  ]);
+export function Actions({
+  MONTH,
+  monthBr,
+  selectedMonthEn,
+  userId,
+  token,
+  actions,
+}: ActionsProps) {
+  const queryClient = useQueryClient();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [actionIndex, setActionIndex] = useState<number | null>(null);
@@ -66,50 +61,6 @@ export function Actions({ MONTH, monthBr, selectedMonthEn }: ActionsProps) {
     ).start();
   }, [bounceValue]);
 
-  useEffect(() => {
-    setActions([
-      { action: "", month: null },
-      { action: "", month: null },
-      { action: "", month: null },
-      { action: "", month: null },
-    ]);
-
-    setActionText("");
-    setActionIndex(null);
-
-    if (actionsString) {
-      try {
-        const parsedString = JSON.parse(actionsString);
-
-        if (typeof parsedString === "string" && isValidJson(parsedString)) {
-          const actionsObject = JSON.parse(parsedString) as [
-            ActionObject,
-            ActionObject,
-            ActionObject,
-            ActionObject,
-          ];
-          setActions(actionsObject);
-        } else {
-          setActions(parsedString);
-        }
-      } catch {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao carregar as ações",
-          text2: "Tente novamente",
-        });
-      }
-    }
-  }, [actionsString]);
-
-  if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-zinc-100">Carregando...</Text>
-      </View>
-    );
-  }
-
   const openModal = () => {
     setModalVisible(true);
   };
@@ -118,31 +69,72 @@ export function Actions({ MONTH, monthBr, selectedMonthEn }: ActionsProps) {
     setModalVisible(false);
   };
 
+  const mutation = useMutation({
+    mutationKey: [`actions-${selectedMonthEn}`],
+    mutationFn: async (action: string) => {
+      const response = await api.post(
+        "/user/create-or-update-revenue-goal",
+        {
+          userId,
+          action,
+          month: selectedMonthEn,
+          actionIndex,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (response.status !== HttpStatusCode.Ok) {
+        throw new Error("Erro ao criar meta mensal");
+      }
+
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`revenue-goal-${selectedMonthEn}`],
+      });
+
+      Toast.show({
+        type: "success",
+        text1: "Meta diária atualizada",
+        position: "bottom",
+      });
+
+      closeModal();
+      setActionIndex(null);
+      setActionText("");
+    },
+    onError: () => {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao atualizar meta diária",
+        position: "bottom",
+      });
+    },
+  });
+
   const handleAction = (index: number) => {
     setActionIndex(index);
-    setActionText(actions[index].action);
+    setActionText(actions[index] || "");
     openModal();
   };
 
   const handleSaveAction = () => {
-    if (actionIndex !== null) {
-      const newActions: [
-        ActionObject,
-        ActionObject,
-        ActionObject,
-        ActionObject,
-      ] = [...actions];
+    if (!actionText) {
+      Toast.show({
+        type: "error",
+        text1: "Ação não pode ser vazia",
+        position: "top",
+      });
 
-      newActions[actionIndex] = { action: actionText, month: MONTH };
-
-      setActions(newActions);
-
-      const actionsString = JSON.stringify(newActions);
-
-      setActionsString(actionsString);
-
-      setModalVisible(false);
+      return;
     }
+
+    mutation.mutate(actionText);
   };
 
   return (
@@ -156,40 +148,50 @@ export function Actions({ MONTH, monthBr, selectedMonthEn }: ActionsProps) {
           <Feather name="chevron-down" size={24} color="#FF005E" />
         </Animated.View>
       </View>
+      {actions.length < 4 && (
+        <TouchableOpacity
+          onPress={() => handleAction(0)}
+          className="bg-[#4F001D] rounded-xl p-6 mb-2"
+        >
+          <Text className="text-center font-zona-regular text-xs text-[#920036]">
+            Clique para adicionar sua ação {actions.length + 1}
+          </Text>
+        </TouchableOpacity>
+      )}
 
-      <ScrollView>
-        {actions.map((action, index) => {
-          const hasAction = action.action.length > 0;
-
-          return (
-            <LinearGradient
-              colors={["#EF0052", "#4E001D"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={{
-                padding: 1,
-                borderRadius: 12,
-                marginBottom: 8,
-              }}
-              key={`action-${index + 1}`}
-            >
-              <TouchableOpacity
-                key={action.action}
-                className="bg-[#4F001D] rounded-xl p-6"
-                onPress={() => handleAction(index)}
+      {actions.length > 0 && (
+        <ScrollView>
+          {actions.map((action, index) => {
+            return (
+              <LinearGradient
+                colors={["#EF0052", "#4E001D"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                  padding: 1,
+                  borderRadius: 12,
+                  marginBottom: 8,
+                }}
+                key={`action-${index + 1}`}
               >
-                <Text
-                  className={`text-center font-zona-regular text-xs ${hasAction ? "text-zinc-100" : "text-[#920036]"}`}
+                <TouchableOpacity
+                  key={action}
+                  className="bg-[#4F001D] rounded-xl p-6"
+                  onPress={() => handleAction(index)}
                 >
-                  {hasAction
-                    ? action.action
-                    : `Clique para adicionar sua ação ${index + 1}`}
-                </Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          );
-        })}
-      </ScrollView>
+                  <Text
+                    className={`text-center font-zona-regular text-xs ${action ? "text-zinc-100" : "text-[#920036]"}`}
+                  >
+                    {action
+                      ? action
+                      : `Clique para adicionar sua ação ${index + 1}`}
+                  </Text>
+                </TouchableOpacity>
+              </LinearGradient>
+            );
+          })}
+        </ScrollView>
+      )}
 
       <Modal
         transparent={true}

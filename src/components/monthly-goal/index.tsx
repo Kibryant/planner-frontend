@@ -1,72 +1,42 @@
-import { useAsyncStorage } from "@/hooks/useAsyncStorage";
 import { LinearGradient } from "expo-linear-gradient";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal, TouchableOpacity, Text, View, TextInput } from "react-native";
 import type { MONTHS } from "@/constants/months";
 import { Feather } from "@expo/vector-icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HttpStatusCode } from "axios";
+import { api } from "@/lib/api";
 import Toast from "react-native-toast-message";
-import { isValidJson } from "@/lib/utils";
 
 interface MonthlyGoalProps {
   MONTH: (typeof MONTHS)[keyof typeof MONTHS];
   monthBr: string;
   selectedMonthEn: (typeof MONTHS)[keyof typeof MONTHS];
-}
-
-interface MonthlyGoalObject {
   monthlyGoal: string;
-  month: (typeof MONTHS)[keyof typeof MONTHS];
+  token: string;
+  userId: string;
 }
 
 export function MonthlyGoal({
   MONTH,
   monthBr,
   selectedMonthEn,
+  monthlyGoal,
+  token,
+  userId,
 }: MonthlyGoalProps) {
-  const [{ loading, value: monthlyGoalString }, setMonthlyGoalString] =
-    useAsyncStorage(`monthlyGoal-${selectedMonthEn}`);
-  const [monthlyGoalText, setMonthlyGoalText] = useState("");
-  const [monthlyGoal, setMonthlyGoal] = useState<MonthlyGoalObject | null>(
-    null,
-  );
+  const queryClient = useQueryClient();
 
+  const [monthlyGoalText, setMonthlyGoalText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
-    setMonthlyGoal(null);
-    setMonthlyGoalText("");
-
-    if (monthlyGoalString) {
-      try {
-        const parsedString = JSON.parse(monthlyGoalString);
-
-        if (typeof parsedString === "string" && isValidJson(parsedString)) {
-          const monthlyGoalObject = JSON.parse(
-            parsedString,
-          ) as MonthlyGoalObject;
-          setMonthlyGoal(monthlyGoalObject);
-          setMonthlyGoalText(monthlyGoalObject.monthlyGoal);
-        } else {
-          setMonthlyGoal(parsedString);
-          setMonthlyGoalText(parsedString.monthlyGoal);
-        }
-      } catch {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao carregar a meta mensal",
-          text2: "Tente novamente",
-        });
-      }
-    }
-  }, [monthlyGoalString]);
-
-  if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-zinc-100">Carregando...</Text>
-      </View>
-    );
-  }
+  const monthlyGoalFormatted =
+    monthlyGoal.length > 0
+      ? Number(monthlyGoal).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })
+      : `Clique para adicionar a Meta do mês de ${monthBr}`;
 
   const openModal = () => {
     setModalVisible(true);
@@ -76,36 +46,65 @@ export function MonthlyGoal({
     setModalVisible(false);
   };
 
-  const handleSaveMonthlyGoal = () => {
-    const monthlyGoalTextToNumber = Number(monthlyGoalText);
+  const mutation = useMutation({
+    mutationKey: [`monthly-goal-${selectedMonthEn}`],
+    mutationFn: async (monthlyGoal: string) => {
+      const response = await api.post(
+        "/user/create-or-update-revenue-goal",
+        {
+          userId,
+          monthlyGoal,
+          month: selectedMonthEn,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
-    if (Number.isNaN(monthlyGoalTextToNumber)) {
+      if (response.status !== HttpStatusCode.Ok) {
+        throw new Error("Erro ao criar meta mensal");
+      }
+
+      return response.data;
+    },
+    onSuccess: () => {
+      Toast.show({
+        type: "success",
+        text1: "Meta mensal atualizada com sucesso",
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [`revenue-goal-${selectedMonthEn}`],
+      });
+    },
+    onError: () => {
       Toast.show({
         type: "error",
-        text1: "Erro ao salvar a meta mensal",
-        text2: "Digite um valor válido",
+        text1: "Erro ao atualizar meta mensal",
+      });
+    },
+  });
+
+  const handleSave = () => {
+    const sanitizedValue = monthlyGoalText.replace(/[^\d]/g, "");
+    const isMonthlyGoalValid = Number(sanitizedValue) > 0;
+
+    if (!isMonthlyGoalValid) {
+      Toast.show({
+        type: "error",
+        text1: "Digite um valor válido",
       });
 
       return;
     }
 
-    const monthlyGoalObject: MonthlyGoalObject = {
-      monthlyGoal: monthlyGoalText,
-      month: selectedMonthEn,
-    };
+    mutation.mutate(sanitizedValue);
 
-    const monthlyGoalString = JSON.stringify(monthlyGoalObject);
-
-    setMonthlyGoalString(monthlyGoalString);
-    setModalVisible(false);
+    setMonthlyGoalText("");
+    closeModal();
   };
-
-  const monthlyGoalFormatted = monthlyGoal?.monthlyGoal
-    ? Number(monthlyGoal.monthlyGoal).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })
-    : "Clique para adicionar uma meta mensal";
 
   return (
     <>
@@ -124,7 +123,7 @@ export function MonthlyGoal({
           onPress={openModal}
         >
           <Text
-            className={`font-zona-bold text-xs uppercase text-center ${monthlyGoal?.monthlyGoal ? "text-zinc-100" : "text-[#920036]"}`}
+            className={`font-zona-bold text-[8px] uppercase text-center ${monthlyGoal.length > 0 ? "text-zinc-100" : "text-[#920036]"}`}
           >
             {monthlyGoalFormatted}
           </Text>
@@ -135,7 +134,7 @@ export function MonthlyGoal({
         transparent={true}
         visible={modalVisible}
         animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={closeModal}
       >
         <View className="flex-1 justify-center items-center bg-black/80">
           <LinearGradient
@@ -157,8 +156,8 @@ export function MonthlyGoal({
               </TouchableOpacity>
 
               <Text className="text-zinc-100 text-center font-zona-semibold text-xl">
-                {monthlyGoal?.monthlyGoal
-                  ? Number(monthlyGoal.monthlyGoal).toLocaleString("pt-BR", {
+                {monthlyGoal
+                  ? Number(monthlyGoal).toLocaleString("pt-BR", {
                       style: "currency",
                       currency: "BRL",
                     })
@@ -169,13 +168,14 @@ export function MonthlyGoal({
                 className="bg-[#47001B] rounded-lg w-full px-8 py-3 mt-4 min-w-80 text-zinc-100"
                 placeholder="Digite sua meta mensal"
                 placeholderTextColor="#DD0354"
+                keyboardType="numeric"
                 onChangeText={setMonthlyGoalText}
                 value={monthlyGoalText}
               />
 
               <TouchableOpacity
                 className="bg-primary rounded-full items-center justify-center w-20 h-20 absolute bottom-1"
-                onPress={handleSaveMonthlyGoal}
+                onPress={handleSave}
               >
                 <Feather name="check" size={32} color="#f4f4f5" />
               </TouchableOpacity>

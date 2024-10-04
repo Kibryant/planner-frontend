@@ -1,65 +1,35 @@
-import { useAsyncStorage } from "@/hooks/useAsyncStorage";
 import { LinearGradient } from "expo-linear-gradient";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal, TouchableOpacity, Text, View, TextInput } from "react-native";
 import type { MONTHS } from "@/constants/months";
 import { Feather } from "@expo/vector-icons";
-import { isValidJson } from "@/lib/utils";
 import Toast from "react-native-toast-message";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HttpStatusCode } from "axios";
+import { api } from "@/lib/api";
 
 interface DailyGoalProps {
   MONTH: (typeof MONTHS)[keyof typeof MONTHS];
   monthBr: string;
   selectedMonthEn: (typeof MONTHS)[keyof typeof MONTHS];
-}
-
-interface DailyGoalObject {
+  token: string;
+  userId: string;
   dailyGoal: string;
-  month: (typeof MONTHS)[keyof typeof MONTHS];
 }
 
-export function DailyGoal({ MONTH, monthBr, selectedMonthEn }: DailyGoalProps) {
-  const [{ loading, value: dailyGoalString }, setDailyGoalString] =
-    useAsyncStorage(`dailyGoal-${selectedMonthEn}`);
+export function DailyGoal({
+  MONTH,
+  monthBr,
+  selectedMonthEn,
+  token,
+  userId,
+  dailyGoal,
+}: DailyGoalProps) {
+  const queryClient = useQueryClient();
 
   const [dailyGoalText, setDailyGoalText] = useState("");
-  const [dailyGoal, setDailyGoal] = useState<DailyGoalObject | null>(null);
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  useEffect(() => {
-    setDailyGoal(null);
-    setDailyGoalText("");
-
-    if (dailyGoalString) {
-      try {
-        const parsedString = JSON.parse(dailyGoalString);
-
-        if (typeof parsedString === "string" && isValidJson(parsedString)) {
-          const dailyGoalObject = JSON.parse(parsedString) as DailyGoalObject;
-          setDailyGoal(dailyGoalObject);
-          setDailyGoalText(dailyGoalObject.dailyGoal);
-        } else {
-          setDailyGoal(parsedString);
-          setDailyGoalText(parsedString.dailyGoal);
-        }
-      } catch {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao carregar a meta diária",
-          text2: "Tente novamente",
-        });
-      }
-    }
-  }, [dailyGoalString]);
-
-  if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-zinc-100">Carregando...</Text>
-      </View>
-    );
-  }
 
   const openModal = () => {
     setModalVisible(true);
@@ -69,8 +39,52 @@ export function DailyGoal({ MONTH, monthBr, selectedMonthEn }: DailyGoalProps) {
     setModalVisible(false);
   };
 
+  const mutation = useMutation({
+    mutationKey: [`daily-goal-${selectedMonthEn}`],
+    mutationFn: async (dailyGoal: string) => {
+      const response = await api.post(
+        "/user/create-or-update-revenue-goal",
+        {
+          userId,
+          dailyGoal,
+          month: selectedMonthEn,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (response.status !== HttpStatusCode.Ok) {
+        throw new Error("Erro ao criar meta mensal");
+      }
+
+      return response.data;
+    },
+    onSuccess: () => {
+      Toast.show({
+        type: "success",
+        text1: "Meta diária atualizada com sucesso",
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [`revenue-goal-${selectedMonthEn}`],
+      });
+
+      closeModal();
+    },
+    onError: () => {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao atualizar a meta diária",
+      });
+    },
+  });
+
   const handleSaveDailyGoal = () => {
-    const dailyGoalTextToNumber = Number(dailyGoalText);
+    const sanitizedValue = dailyGoalText.replace(/\D/g, "");
+    const dailyGoalTextToNumber = Number(sanitizedValue);
 
     if (Number.isNaN(dailyGoalTextToNumber)) {
       Toast.show({
@@ -81,23 +95,16 @@ export function DailyGoal({ MONTH, monthBr, selectedMonthEn }: DailyGoalProps) {
 
       return;
     }
-    const dailyGoalObject: DailyGoalObject = {
-      dailyGoal: dailyGoalText,
-      month: MONTH,
-    };
 
-    const dailyGoalString = JSON.stringify(dailyGoalObject);
-
-    setDailyGoalString(dailyGoalString);
-    setModalVisible(false);
+    mutation.mutate(dailyGoalText);
   };
 
-  const dailyGoalFormated = dailyGoal?.dailyGoal
-    ? Number(dailyGoal.dailyGoal).toLocaleString("pt-BR", {
+  const dailyGoalFormated = dailyGoal
+    ? Number(dailyGoal).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
       })
-    : "Clique para adicionar uma meta diária";
+    : `Clique aqui para adicionar sua meta diária do mês de ${monthBr}`;
 
   return (
     <>
@@ -116,7 +123,7 @@ export function DailyGoal({ MONTH, monthBr, selectedMonthEn }: DailyGoalProps) {
           onPress={openModal}
         >
           <Text
-            className={`font-zona-bold text-xs uppercase text-center ${dailyGoal?.dailyGoal ? "text-zinc-100" : "text-[#920036]"}`}
+            className={`font-zona-bold text-[8px] uppercase text-center ${dailyGoal.length > 0 ? "text-zinc-100" : "text-[#920036]"}`}
           >
             {dailyGoalFormated}
           </Text>
@@ -149,7 +156,7 @@ export function DailyGoal({ MONTH, monthBr, selectedMonthEn }: DailyGoalProps) {
               </TouchableOpacity>
 
               <Text className="text-zinc-100 text-center font-zona-semibold text-xl">
-                {dailyGoal?.dailyGoal
+                {dailyGoal.length > 0
                   ? "Edite sua meta diária"
                   : "Adicione sua meta diária"}
               </Text>

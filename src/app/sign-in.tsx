@@ -39,7 +39,7 @@ export default function Index() {
         <View className="flex-1 bg-zinc-950 justify-center items-center px-8">
           <View className="mb-12">
             <Image
-              source={logoHorizontal} // Substitua pela logo correta
+              source={logoHorizontal}
               className="w-[265.54px] h-[111.38px]"
               resizeMode="contain"
               accessibilityLabel="Logo da Mecha Turbo"

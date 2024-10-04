@@ -4,27 +4,26 @@
     "slug": "planner-frontend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./public/icon.png",
+    "scheme": "planner-mecha-turbo",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./public/splash.png",
+      "backgroundColor": "#09090B",
+      "resizeMode": "none"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./public/adaptive-icon.png"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./public/favicon.png"
     },
     "plugins": [
       "expo-router",
