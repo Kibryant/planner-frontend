@@ -10,10 +10,11 @@
     "splash": {
       "image": "./public/splash.png",
       "backgroundColor": "#09090B",
-      "resizeMode": "none"
+      "resizeMode": "contain"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.planner.mecha.turbo.br"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +24,8 @@
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.ACCESS_MEDIA_LOCATION"
-      ]
+      ],
+      "package": "com.planner.mecha.turbo.br"
     },
     "web": {
       "bundler": "metro",
