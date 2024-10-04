@@ -18,7 +18,12 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./public/adaptive-icon.png"
-      }
+      },
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -39,6 +44,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "4b75a63a-23dd-462c-b2e3-bdc51b20a172"
+      }
     }
   }
 }
