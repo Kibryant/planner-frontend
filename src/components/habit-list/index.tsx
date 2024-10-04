@@ -1,11 +1,15 @@
 import React from "react";
 import { View } from "react-native";
-import { CardHabit } from "@/components/card-habit";
+import { CardHabit, type HabitType } from "@/components/card-habit";
 
-export function HabitList() {
+interface HabitListProps {
+  selectedHabit: HabitType;
+}
+
+export function HabitList({ selectedHabit }: HabitListProps) {
   return (
     <View className="flex-1 justify-center mt-10 items-center">
-      <CardHabit />
+      <CardHabit selectedHabit={selectedHabit} />
     </View>
   );
 }

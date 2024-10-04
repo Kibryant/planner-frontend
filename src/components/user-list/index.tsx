@@ -49,13 +49,6 @@ export function UserList({ users, isLoading, fetchNextPage, deleteUser, editUser
   }
 
   return (
-    <View>
-      <Text className="text-3xl font-zona-bold text-zinc-100 mb-4 text-center mt-10">
-        Usuários Cadastrados
-      </Text>
-
-
-
       <FlatList
         data={users}
         keyExtractor={(user) => user.id}
@@ -65,6 +58,5 @@ export function UserList({ users, isLoading, fetchNextPage, deleteUser, editUser
         onEndReachedThreshold={0.1}
         ListFooterComponent={ListFooterComponent}
       />
-    </View>
   );
 }

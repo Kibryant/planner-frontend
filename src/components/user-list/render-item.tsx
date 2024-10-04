@@ -33,7 +33,7 @@ export function RenderItem({ item, deleteUser, editUser }: RenderItemProps) {
   };
 
   return (
-    <View className="border-b-2 border-primary p-4">
+    <View className="border-b-2 border-primary py-4">
       <Text className="text-lg font-zona-bold text-primary">{item.email}</Text>
       <Text className="text-lg font-zona-bold text-zinc-300">
         Data de compra:{" "}

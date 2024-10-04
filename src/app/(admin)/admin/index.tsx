@@ -22,7 +22,7 @@ export default function Index() {
 
         <View className="w-full mt-20">
           <MainCard
-            text="Usuários cadastrados"
+            text="Usuários cadastrados no aplicativo"
             IconHeader={UsersIcon}
             href="/admin/users"
           />
@@ -38,7 +38,7 @@ export default function Index() {
           </View>
 
           <TouchableOpacity
-            className="p-4 w-full border border-primary rounded-md mt-2"
+            className="px-4 py-6 w-full rounded-xl bg-[#4F001D]"
             onPress={logout}
           >
             <Text className="text-zinc-100 font-zona-bold text-center">

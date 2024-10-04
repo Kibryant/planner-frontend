@@ -1,10 +1,13 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import type { HabitType } from "../card-habit";
 
 interface HabitSelectorProps {
   selectedHabit: string;
-  onSelectHabit: (habit: string) => void;
+  onSelectHabit: (habit: HabitType) => void;
 }
+
+const HABIT_TYPES = ["Diário", "Semanal", "Mensal"] as const;
 
 export function HabitSelector({
   selectedHabit,
@@ -12,8 +15,8 @@ export function HabitSelector({
 }: HabitSelectorProps) {
   return (
     <View className="flex-row justify-center mt-10">
-      <View className="flex-row justify-between w-80 mt-5 bg-[#FF005E4F] rounded-full px-3 py-3">
-        {["Diário", "Semanal", "Mensal"].map((habit) => (
+      <View className="flex-row justify-between w-80 mt-5 bg-[#FF005E4F] rounded-full px-3 py-1.5">
+        {HABIT_TYPES.map((habit) => (
           <TouchableOpacity
             key={habit}
             className={`px-4 py-5 ${

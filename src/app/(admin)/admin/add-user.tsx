@@ -1,14 +1,17 @@
 import { AddUserForm } from "@/components/add-user-form";
-import { View, Text } from "react-native";
+import { Back } from "@/components/back";
+import { Title } from "@/components/title";
+import { View } from "react-native";
 
 export default function AddUser() {
   return (
     <View className="flex-1 bg-zinc-950 px-8">
-      <Text className="text-3xl font-zona-bold text-zinc-100 mt-10 mb-4 text-center">
-        Adicionar novo usuário
-      </Text>
+      <Back />
+      <Title title="Adicionar usuário" />
 
-      <AddUserForm />
+      <View className="mt-10">
+        <AddUserForm />
+      </View>
     </View>
   );
 }

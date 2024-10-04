@@ -15,7 +15,7 @@ const backgroundIcon = [
   "cloud-snow",
   "cloud-lightning",
   "moon",
-];
+] as const;
 
 export function GradientBorderCircle({ day }: GradientBorderCircleProps) {
   return (

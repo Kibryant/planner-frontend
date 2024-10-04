@@ -7,18 +7,38 @@ import type {
   ViewToken,
 } from "react-native";
 
-const images = [
-  require("@/assets/images/bancada.png"),
-  require("@/assets/images/bancada.png"),
-  require("@/assets/images/bancada.png"),
-  require("@/assets/images/bancada.png"),
-  require("@/assets/images/bancada.png"),
-];
+export type HabitType = "Diário" | "Semanal" | "Mensal";
 
-export function CardHabit() {
+const habitImages: Record<HabitType, ImageSourcePropType[]> = {
+  Diário: [
+    require("@/assets/images/bancada.png"),
+    require("@/assets/images/bancada.png"),
+  ],
+  Semanal: [
+    require("@/assets/images/bancada.png"),
+    require("@/assets/images/bancada.png"),
+  ],
+  Mensal: [
+    require("@/assets/images/bancada.png"),
+    require("@/assets/images/bancada.png"),
+  ],
+};
+
+const habitTitles: Record<HabitType, string> = {
+  Diário: "Organização diária da bancada e sala",
+  Semanal: "Revisão semanal dos processos",
+  Mensal: "Planejamento mensal da equipe",
+};
+
+interface CardHabitProps {
+  selectedHabit: HabitType;
+}
+
+export function CardHabit({ selectedHabit }: CardHabitProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const carouselRef = useRef(null);
 
+  const images = habitImages[selectedHabit];
+  const carouselRef = useRef<FlatList<ImageSourcePropType> | null>(null);
   const onViewableItemsChanged = ({
     viewableItems,
   }: {
@@ -47,10 +67,10 @@ export function CardHabit() {
 
   return (
     <View style={styles.container}>
-      {/* Título */}
+      {/* Título dinâmico */}
       <View className="p-6">
         <Text className="text-zinc-100 text-2xl font-zona-semibold max-w-60">
-          Organização da bancada e sala
+          {habitTitles[selectedHabit] || "Hábito selecionado"}
         </Text>
       </View>
 
@@ -89,18 +109,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#4F001D",
     borderRadius: 24,
     overflow: "hidden",
-  },
-  titleContainer: {
-    padding: 16,
-    backgroundColor: "#4F001D",
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  title: {
-    color: "#F0F0F0",
-    fontSize: 24,
-    fontFamily: "zona-semibold",
-    textAlign: "center",
   },
   imageContainer: {
     borderRadius: 24,

@@ -12,12 +12,16 @@ import { useAdminStore } from "@/store/admin-store";
 import { api } from "@/lib/api";
 import { DatePickerModal } from "../date-picker-modal";
 import type { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { ConfirmationModal } from "../confirmation-modal";
+import { DatePickerButton } from "../date-picker-button";
 
 export function AddUserForm() {
   const token = useAdminStore((state) => state.admin?.token);
   const queryClient = useQueryClient();
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [formData, setFormData] = useState<CreateUserSchema | null>(null);
 
   const onChangeDate = (event: DateTimePickerEvent, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
@@ -73,7 +77,15 @@ export function AddUserForm() {
   });
 
   const onSubmit = (data: CreateUserSchema) => {
-    mutation.mutate(data);
+    setFormData(data);
+    setShowConfirmationModal(true);
+  };
+
+  const confirmSubmission = () => {
+    if (formData) {
+      mutation.mutate(formData);
+      setShowConfirmationModal(false);
+    }
   };
 
   return (
@@ -118,17 +130,10 @@ export function AddUserForm() {
           <Text className="text-red-500">{errors.email.message}</Text>
         )}
         <View className="w-full gap-y-2">
-          <TouchableOpacity
-            className="w-full rounded-md p-4 border border-primary"
+          <DatePickerButton
+            date={date}
             onPress={() => setShowDatePicker(true)}
-          >
-            <Text className="text-center text-zinc-100 font-zona-bold">
-              Selecionar a data de compra
-            </Text>
-            <Text className="text-center text-zinc-100 font-zona-bold">
-              {date.toLocaleDateString("pt-br")}
-            </Text>
-          </TouchableOpacity>
+          />
         </View>
       </View>
 
@@ -145,6 +150,20 @@ export function AddUserForm() {
             Adicionar Usuário
           </Text>
         </TouchableOpacity>
+
+        <ConfirmationModal
+          visible={showConfirmationModal}
+          onCancel={() => setShowConfirmationModal(false)}
+          onConfirm={confirmSubmission}
+          data={{
+            name: formData?.name,
+            email: formData?.email,
+            purchaseDate: date.toLocaleDateString("pt-br"),
+            expirationDate: new Date(
+              new Date(date).setFullYear(new Date(date).getFullYear() + 1),
+            ).toLocaleDateString("pt-br"),
+          }}
+        />
       </View>
     </View>
   );
