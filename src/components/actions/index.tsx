@@ -232,7 +232,7 @@ export function Actions({
               />
 
               <TouchableOpacity
-                className="bg-primary rounded-full items-center justify-center w-20 h-20 absolute bottom-1"
+                className="bg-primary rounded-full items-center justify-center w-20 h-20 absolute bottom-2"
                 onPress={handleSaveAction}
               >
                 <Feather name="check" size={32} color="#f4f4f5" />

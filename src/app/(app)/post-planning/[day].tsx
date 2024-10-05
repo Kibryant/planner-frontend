@@ -14,7 +14,6 @@ import { Back } from "@/components/back";
 import { BottomButton } from "@/components/bottom-button";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { DAYS } from "@/constants/days";
 import {
   type CreateDailyTaskSchema,
@@ -30,6 +29,8 @@ import { getDailyTasksByDay } from "@/functions/get-daily-tasks-by-day";
 import type { CompleteDailyTaskSchema } from "@/schema/complete-daily-task-schema";
 import { completeDailyTask as completeDailyTaskFunction } from "@/functions/complete-daily-task";
 import { useAdminStore } from "@/store/admin-store";
+import { TaskCard } from "@/components/task-card";
+import { TaskPlaceholder } from "@/components/task-placeholder";
 
 const MAX_TASKS = 5;
 
@@ -160,6 +161,13 @@ export default function PostPlanner() {
   };
 
   const completeDailyTask = ({ taskId }: CompleteDailyTaskSchema) => {
+    if (mutationComplete.isPending) {
+      Toast.show({
+        type: "info",
+        text1: "Aguarde a conclusão da tarefa anterior",
+      });
+    }
+
     mutationComplete.mutate({
       taskId,
       userId: user?.id || admin?.admin.id || "",
@@ -168,92 +176,44 @@ export default function PostPlanner() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View className="flex-1 bg-zinc-950">
-        <View className="flex-1 px-8">
-          <Back />
+    <View className="flex-1 bg-zinc-950">
+      <View className="flex-1 px-8">
+        <Back />
 
-          <Title title={day as string} />
+        <Title title={day as string} />
 
-          <View className="flex-1 mt-20">
-            {tasks.map((task) => (
-              <LinearGradient
-                colors={["#EF0052", "#4E001D"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{
-                  padding: 1,
-                  borderRadius: 12,
-                  marginBottom: 18,
-                }}
-                key={`task-${task.id}`}
-              >
-                <View className="flex-row items-center justify-between bg-[#4F001D] rounded-xl p-6">
-                  <TouchableOpacity
-                    className="flex-1"
-                    onPress={() =>
-                      openModal({
-                        id: task.id,
-                        title: task.title,
-                        description: task.description,
-                      })
-                    }
-                  >
-                    <Text
-                      className="text-zinc-100 text-xs font-zona-bold max-w-72"
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                    >
-                      {task.title}
-                    </Text>
-                  </TouchableOpacity>
+        <View className="flex-1 mt-20">
+          {tasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              onComplete={() => completeDailyTask({ taskId: task.id })}
+              onPress={() =>
+                openModal({
+                  id: task.id,
+                  title: task.title,
+                  description: task.description,
+                })
+              }
+            />
+          ))}
 
-                  <BouncyCheckbox
-                    size={26}
-                    fillColor="#FF005E"
-                    iconStyle={{ borderColor: "#FF005E", borderRadius: 4 }}
-                    onPress={() => completeDailyTask({ taskId: task.id })}
-                    className="absolute right-4"
-                    isChecked={task.completed}
-                    innerIconStyle={{ borderColor: "#FF005E", borderRadius: 4 }}
-                  />
-                </View>
-              </LinearGradient>
-            ))}
+          {placeholders.map((placeholder, index) => (
+            <TaskPlaceholder
+              key={`placeholder-${index + 1}`}
+              placeholder={placeholder}
+              onPress={() => openModal({ title: placeholder, description: "" })}
+            />
+          ))}
+        </View>
 
-            {placeholders.map((placeholder, index) => (
-              <LinearGradient
-                colors={["#EF0052", "#4E001D"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{
-                  padding: 1,
-                  borderRadius: 12,
-                  marginBottom: 18,
-                }}
-                key={`placeholder-${index + 1}`}
-              >
-                <View className="flex-row items-center justify-between bg-[#4F001D] rounded-xl p-6">
-                  <TouchableOpacity
-                    onPress={() =>
-                      openModal({ title: placeholder, description: "" })
-                    }
-                  >
-                    <Text className="text-zinc-100 text-xs font-zona-regular">
-                      Clique aqui para adicionar {placeholder}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </LinearGradient>
-            ))}
-          </View>
-
-          <Modal
-            transparent={true}
-            visible={modalVisible}
-            animationType="slide"
-            onRequestClose={() => setModalVisible(false)}
-          >
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          animationType="slide"
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View className="flex-1 justify-center items-center bg-black/80">
               <LinearGradient
                 colors={["#EF0052", "#4E001D"]}
@@ -329,13 +289,13 @@ export default function PostPlanner() {
                 </View>
               </LinearGradient>
             </View>
-          </Modal>
-        </View>
-
-        <View className="mt-10 items-center flex-row justify-center">
-          <BottomButton />
-        </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
-    </TouchableWithoutFeedback>
+
+      <View className="mt-10 items-center flex-row justify-center">
+        <BottomButton />
+      </View>
+    </View>
   );
 }

@@ -17,7 +17,7 @@ export function ScrollButtons({
         onPress={onScrollToTop}
         style={{
           position: "absolute",
-          top: 150,
+          top: 130,
           alignSelf: "center",
           backgroundColor: "#FF005E",
           borderRadius: 20,

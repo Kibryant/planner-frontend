@@ -2,7 +2,7 @@
   "expo": {
     "name": "Planner Mecha Turbo",
     "slug": "planner-frontend",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./public/icon.png",
     "scheme": "planner-mecha-turbo",
