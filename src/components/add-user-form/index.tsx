@@ -46,7 +46,8 @@ export function AddUserForm() {
       return api.post(
         "/admin/create-user",
         {
-          ...data,
+          email: data.email.toLowerCase(),
+          name: data.name,
           purchaseDate: date,
           expirationDate: expirationDate,
         },
