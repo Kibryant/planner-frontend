@@ -97,7 +97,7 @@ export default function Share() {
 
         <Title title={`Ação ${tip.title.toLowerCase()}`} />
 
-        <View className="justify-center my-5 p-4 items-center">
+        <View className="justify-center my-2 p-4 items-center">
           <View
             style={{
               borderRadius: 20,
@@ -119,7 +119,7 @@ export default function Share() {
         </View>
 
         <View className="items-center">
-          <View className="bg-[#640025] rounded-xl max-w-64 overflow-hidden max-h-96">
+          <View className="bg-[#640025] rounded-xl max-w-64 overflow-hidden max-h-[360px]">
             <LinearGradient
               colors={["#B90040", "#EF0052", "B90040", "#EF0052"]}
               start={[0, 0]}
@@ -146,11 +146,11 @@ export default function Share() {
             <Carousel />
           </View>
         </View>
-      </ScrollView>
 
-      <View className="mt-10 items-center flex-row justify-center">
-        <BottomButton />
-      </View>
+        <View className="items-center flex-row justify-center mt-10">
+          <BottomButton />
+        </View>
+      </ScrollView>
     </View>
   );
 }
