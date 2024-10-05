@@ -4,7 +4,16 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "base": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "extends": "base",
+      "autoIncrement": true,
       "node": "20.11.1",
       "npm": "10.2.4",
       "android": {
@@ -17,17 +26,6 @@
           "PLATFORM": "ios"
         }
       }
-    },
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {
-      "extends": "base",
-      "autoIncrement": true
     }
   },
   "submit": {
