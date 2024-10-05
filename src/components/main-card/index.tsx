@@ -26,7 +26,7 @@ export function MainCard({ href, IconHeader, text }: MainCardProps) {
     >
       <Link href={href} asChild>
         <TouchableOpacity
-          className="bg-[#4F001D] flex-1 flex-row rounded-xl justify-start items-center p-5"
+          className="bg-[#4F001D] flex-1 flex-row rounded-xl justify-start items-center p-5 w-full"
           accessibilityLabel="Ações mensais para aumentar o faturamento"
           accessibilityHint="Clique para acessar as ações mensais"
           activeOpacity={0.8}

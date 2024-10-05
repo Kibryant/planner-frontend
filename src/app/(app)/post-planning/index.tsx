@@ -45,14 +45,14 @@ export default function PostPlanning() {
       </View>
 
       <View className="mt-10 px-5">
-        <View className="flex overflow-hidden flex-row items-center justify-end border border-primary bg-[#46001A] rounded-[32px] p-4 h-44">
+        <View className="flex overflow-hidden flex-row items-center justify-end border border-primary bg-[#46001A] rounded-[32px] p-2 h-44">
           <Image
             source={require("@/assets/images/hairstyle.png")}
             style={{
               width: imageHeight,
               height: imageHeight,
             }}
-            className="absolute bottom-0 left-2"
+            className="absolute -bottom-1 left-2"
             accessibilityLabel="Imagem de um penteado de cabelo."
           />
           <Text className="text-zinc-100 max-w-52 font-zona-semibold">

@@ -15,7 +15,7 @@ const dicas = [
 
 export function TipsList() {
   return (
-    <ScrollView className="mt-5 px-5">
+    <ScrollView className="mt-5 px-2 py-4" persistentScrollbar>
       {dicas.map((dica) => (
         <TipItem key={dica.id} id={dica.id} text={dica.text} />
       ))}

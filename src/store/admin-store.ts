@@ -29,8 +29,6 @@ export const useAdminStore = create<AdminState>()(
         try {
           const response = await adminLogin({ email, password, accessCode });
 
-          console.log(response);
-
           if (response) {
             set({ admin: response });
           }

@@ -58,7 +58,6 @@ export default function Index() {
   });
 
   const handleLogin = (data: AdminLoginSchema) => {
-    console.log(data);
     mutation.mutate(data);
   };
 
@@ -73,7 +72,7 @@ export default function Index() {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View
-          className="flex-1 bg-black justify-center items-center px-8"
+          className="flex-1 bg-zinc-950 justify-center items-center px-8"
           style={{ paddingHorizontal: width * 0.05 }}
         >
           <View className="mb-12" style={{ marginBottom: height * 0.05 }}>
