@@ -46,7 +46,7 @@ export function LoginForm() {
   });
 
   const handleLogin = ({ email, password }: UserLoginSchema) => {
-    mutation.mutate({ email, password });
+    mutation.mutate({ email: email.toLowerCase(), password });
   };
 
   return (
@@ -86,7 +86,6 @@ export function LoginForm() {
             <TextInput
               placeholder="Senha"
               placeholderTextColor="#ccc"
-              secureTextEntry
               className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4"
               accessibilityLabel="Campo de senha"
               accessibilityHint="Digite sua senha"
