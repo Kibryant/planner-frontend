@@ -1,6 +1,5 @@
 {
   "cli": {
-    "version": ">= 10.1.1",
     "appVersionSource": "remote"
   },
   "build": {
@@ -12,19 +11,19 @@
       "distribution": "internal"
     },
     "production": {
-      "extends": "base",
       "autoIncrement": true,
       "node": "20.11.1",
-      "npm": "10.2.4",
       "android": {
         "env": {
           "PLATFORM": "android"
-        }
+        },
+        "autoIncrement": "version"
       },
       "ios": {
         "env": {
           "PLATFORM": "ios"
-        }
+        },
+        "autoIncrement": "version"
       }
     }
   },
