@@ -8,12 +8,14 @@ import { Back } from "@/components/back";
 import { Title } from "@/components/title";
 
 export default function Users() {
-  const token = useAdminStore((state) => state.admin?.token);
+  const adminToken = useAdminStore((state) => state.admin?.token);
 
-  const { users, isLoading, fetchNextPage } = useGetUsers(token || "");
+  const token = adminToken || "";
+
+  const { users, isLoading, fetchNextPage } = useGetUsers(token);
 
   const { deleteUser, editUser, editingUser, showModal, closeModal } =
-    useUserActions(token || "");
+    useUserActions(token);
 
   return (
     <View className="flex-1 bg-zinc-950 px-8">

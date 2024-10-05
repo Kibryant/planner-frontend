@@ -137,7 +137,7 @@ export default function Index() {
             />
             {errors.email && (
               <Text className="text-red-500 font-zona-regular text-sm mb-2">
-                x {errors.email.message}
+                {errors.email.message}
               </Text>
             )}
           </View>

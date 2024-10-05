@@ -5,7 +5,7 @@ export const adminLoginSchema = z.object({
     .string()
     .min(3, "Código de acesso muito curto")
     .max(100, "Código de acesso muito longo"),
-  email: z.string().email(),
+  email: z.string().email("Email inválido"),
   password: z.string().min(3, "Senha muito curta"),
 });
 
