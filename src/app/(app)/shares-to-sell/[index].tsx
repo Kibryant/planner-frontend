@@ -115,7 +115,7 @@ export default function Share() {
         </View>
 
         <View className="items-center">
-          <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[312px]">
+          <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[312px] max-w-[360px]">
             <LinearGradient
               colors={["#B90040", "#EF0052", "B90040", "#EF0052"]}
               start={[0, 0]}
@@ -133,7 +133,7 @@ export default function Share() {
                 accessibilityLabel="Baixar todos os links"
               >
                 <DownloadIconTurned
-                  style={{ position: "absolute", left: 18 }}
+                  style={{ position: "absolute", left: 52 }}
                 />
 
                 <Text className="text-zinc-100 text-center text-lg font-zona-semibold">

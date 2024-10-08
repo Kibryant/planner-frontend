@@ -38,7 +38,6 @@ export function Carousel() {
   }> = ({ item }) => {
     return (
       <View className="items-center justify-center mt-3 w-96">
-        {/* Botão de navegação para a esquerda */}
         <View className="absolute left-4 top-1/2 transform -translate-y-1/2">
           <TouchableOpacity
             className="h-[18px] w-[18px] bg-primary rounded items-center justify-center"
