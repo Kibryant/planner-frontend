@@ -56,7 +56,6 @@ export function Carousel() {
           </TouchableOpacity>
         </View>
 
-        {/* Imagem */}
         <Image
           source={{ uri: item.url }}
           className="rounded-lg mb-3"
@@ -65,7 +64,6 @@ export function Carousel() {
           accessibilityLabel={`Imagem do arquivo ${item.name}`}
         />
 
-        {/* Botão de navegação para a direita */}
         <View className="absolute right-4 top-1/2 transform -translate-y-1/2">
           <TouchableOpacity
             className="h-[18px] w-[18px] bg-primary rounded items-center justify-center"
