@@ -5,7 +5,7 @@ export function BackAdmin() {
   return (
     <Link href="/admin" asChild>
       <TouchableOpacity
-        className="w-20 h-16 rounded-full justify-center items-center border-2 border-primary absolute right-24"
+        className="w-20 h-16 rounded-full justify-center items-center border-2 border-primary absolute right-[92px] bg-[#940037]"
         accessibilityLabel="Botão Sair"
         accessibilityHint="Clique para sair do painel de administração"
         activeOpacity={0.8}

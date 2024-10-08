@@ -14,10 +14,10 @@ export default function Home() {
   const admin = useAdminStore((state) => state.admin);
 
   return (
-    <View className="flex-1 px-8 bg-zinc-950 justify-center">
-      <View className="flex-row items-center max-w-72">
+    <View className="flex-1 px-8 bg-zinc-950">
+      <View className="flex-row items-center max-w-72 mt-10">
         <View className="bg-primary h-10 w-[2px] mr-3 rounded-full" />
-        <Text className="text-zinc-100 text-2xl font-zona-bold">
+        <Text className="text-zinc-100 text-[25px] font-zona-bold">
           Menu Principal
         </Text>
       </View>

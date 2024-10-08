@@ -100,11 +100,11 @@ export function DailyGoal({
   };
 
   const dailyGoalFormated = dailyGoal
-    ? Number(dailyGoal).toLocaleString("pt-BR", {
+    ? `${Number(dailyGoal).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
-      })
-    : `Clique aqui para adicionar sua meta diária do mês de ${monthBr}`;
+      })} Por dia`
+    : "Clique aqui para adicionar sua meta diária";
 
   return (
     <>
@@ -116,14 +116,15 @@ export function DailyGoal({
           padding: 1.75,
           borderRadius: 24,
           marginBottom: 8,
+          maxWidth: 300,
         }}
       >
         <TouchableOpacity
-          className="bg-[#4F001D] rounded-3xl p-6 text-center"
+          className="bg-[#4F001D] rounded-3xl p-6 text-center min-w-[300px]"
           onPress={openModal}
         >
           <Text
-            className={`font-zona-bold text-[8px] uppercase text-center ${dailyGoal.length > 0 ? "text-zinc-100" : "text-[#920036]"}`}
+            className={`font-zona-bold text-[10px] text-center ${dailyGoal.length > 0 ? "text-zinc-100" : "text-[#920036]"}`}
           >
             {dailyGoalFormated}
           </Text>

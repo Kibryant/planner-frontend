@@ -15,16 +15,18 @@ export function HabitSelector({
 }: HabitSelectorProps) {
   return (
     <View className="flex-row justify-center mt-10">
-      <View className="flex-row justify-between w-80 mt-5 bg-[#FF005E4F] rounded-full px-3 py-1.5">
+      <View className="flex-row justify-between items-center w-[300px] mt-5 bg-[#FF005E4F] rounded-full px-2 py-1.5">
         {HABIT_TYPES.map((habit) => (
           <TouchableOpacity
             key={habit}
-            className={`px-4 py-5 ${
+            className={`${habit === "Semanal" ? "flex-1 mx-[3px]" : "px-4"} py-[16px] ${
               selectedHabit === habit ? "bg-primary" : "bg-[#3D0016]"
             } rounded-full`}
             onPress={() => onSelectHabit(habit)}
           >
-            <Text className="text-zinc-100 font-zona-semibold">{habit}</Text>
+            <Text className="text-zinc-100 font-zona-semibold text-center">
+              {habit}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>

@@ -22,7 +22,7 @@ export function ProgessBar({ value }: ProgessBarProps) {
         <Text className="text-zinc-100 font-zona-semibold mb-2 text-sm">
           Progresso da semana
         </Text>
-        <View className="w-full flex-row items-center justify-between">
+        <View className="w-[136px] flex-row items-center justify-between">
           <View className="h-2.5 bg-[#3C0016] rounded-full w-full flex-row items-center justify-between">
             <View
               className="h-2.5 bg-primary rounded-full"

@@ -31,7 +31,7 @@ export function ScrollButtons({
         onPress={onScrollToBottom}
         style={{
           position: "absolute",
-          bottom: 60,
+          bottom: 44,
           alignSelf: "center",
           backgroundColor: "#FF005E",
           borderRadius: 20,

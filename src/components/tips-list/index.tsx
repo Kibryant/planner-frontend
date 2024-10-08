@@ -15,7 +15,7 @@ export function TipList() {
           <TouchableOpacity key={`${tip.thumbnail}-${index}`} className="mb-4">
             <Image
               source={{ uri: tip.thumbnail }}
-              className="w-56 h-32 rounded-lg"
+              className="w-60 h-36 rounded-lg"
             />
           </TouchableOpacity>
         </Link>

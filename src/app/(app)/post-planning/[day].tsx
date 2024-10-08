@@ -58,8 +58,8 @@ export default function PostPlanner() {
   } = useForm<CreateDailyTaskSchema>({
     resolver: zodResolver(createDailyTaskSchema),
     defaultValues: {
-      title: selectedTask?.title ?? "",
-      description: selectedTask?.description ?? "",
+      title: selectedTask?.title || "",
+      description: selectedTask?.description || "",
     },
   });
 
@@ -225,7 +225,7 @@ export default function PostPlanner() {
                   marginBottom: 18,
                 }}
               >
-                <View className="bg-[#4F001D] rounded-xl p-6 w-11/12 justify-center items-center h-96">
+                <View className="bg-[#4F001D] rounded-xl p-4 w-9/12 justify-center items-center max-h-[400px]">
                   <TouchableOpacity
                     onPress={closeModal}
                     className="absolute top-2 right-2 border border-primary rounded-full p-1"
@@ -233,7 +233,7 @@ export default function PostPlanner() {
                     <Feather name="x" size={20} color="#fb005d" />
                   </TouchableOpacity>
 
-                  <Text className="text-zinc-100 text-2xl mb-4 font-zona-semibold">
+                  <Text className="text-zinc-100 text-2xl mb-4 font-zona-semibold mt-[10px] text-center">
                     {selectedTask?.title}
                   </Text>
 
@@ -243,7 +243,7 @@ export default function PostPlanner() {
                       <TextInput
                         placeholder={selectedTask?.title || "Título"}
                         placeholderTextColor="#AC0040"
-                        className="min-w-full h-12 bg-[#47001B] text-zinc-100 rounded-3xl px-20 mb-3 text-center"
+                        className="min-w-full h-12 bg-[#47001B] text-zinc-100 rounded-3xl px-20 text-center"
                         accessibilityLabel="Campo de título da tarefa"
                         accessibilityHint="Digite o título da tarefa"
                         onBlur={onBlur}
@@ -255,7 +255,7 @@ export default function PostPlanner() {
                     name="title"
                   />
                   {errors.title && (
-                    <Text className="text-red-500 text-sm font-zona-regular">
+                    <Text className="text-red-500 text-sm font-zona-regular mt-1">
                       {errors.title.message}
                     </Text>
                   )}
@@ -266,7 +266,7 @@ export default function PostPlanner() {
                       <TextInput
                         placeholder={selectedTask?.description || "Descrição"}
                         placeholderTextColor="#AC0040"
-                        className="w-full h-40 bg-[#47001B] text-zinc-100 rounded-3xl px-16 mb-3 min-w-96 max-w-96 text-center"
+                        className="w-full h-40 bg-[#47001B] text-zinc-100 rounded-3xl px-16 mb-3 min-w-96 max-w-96 text-center mt-8"
                         accessibilityLabel="Campo de descrição da tarefa"
                         accessibilityHint="Digite a descrição da tarefa"
                         maxLength={100}
@@ -280,11 +280,17 @@ export default function PostPlanner() {
                     name="description"
                   />
 
+                  {errors.description && (
+                    <Text className="text-red-500 text-sm font-zona-regular">
+                      {errors.description.message}
+                    </Text>
+                  )}
+
                   <TouchableOpacity
-                    className="bg-primary rounded-full items-center justify-center w-20 h-20"
+                    className="bg-primary rounded-full items-center justify-center w-16 h-16 mt-5"
                     onPress={handleSubmit(onSubmit)}
                   >
-                    <Feather name="check" size={32} color="#f4f4f5" />
+                    <Feather name="check" size={24} color="#f4f4f5" />
                   </TouchableOpacity>
                 </View>
               </LinearGradient>

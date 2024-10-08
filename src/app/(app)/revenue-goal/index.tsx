@@ -118,7 +118,7 @@ export default function RevenueGoal() {
         onPress={() => setModalVisible(true)}
       />
 
-      <View className="mt-8">
+      <View className="mt-8 items-center">
         <MonthlyGoal
           MONTH={actualMonth}
           monthBr={selectedMonth}

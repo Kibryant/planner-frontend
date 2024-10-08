@@ -32,10 +32,10 @@ export function MonthlyGoal({
 
   const monthlyGoalFormatted =
     monthlyGoal.length > 0
-      ? Number(monthlyGoal).toLocaleString("pt-BR", {
+      ? `${Number(monthlyGoal).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
-        })
+        })} Por mês`
       : `Clique para adicionar a Meta do mês de ${monthBr}`;
 
   const openModal = () => {
@@ -116,14 +116,15 @@ export function MonthlyGoal({
           padding: 1.75,
           borderRadius: 24,
           marginBottom: 8,
+          maxWidth: 300,
         }}
       >
         <TouchableOpacity
-          className="bg-[#4F001D] rounded-3xl p-6 text-center"
+          className="bg-[#4F001D] rounded-3xl p-6 text-center min-w-[300px]"
           onPress={openModal}
         >
           <Text
-            className={`font-zona-bold text-[8px] uppercase text-center ${monthlyGoal.length > 0 ? "text-zinc-100" : "text-[#920036]"}`}
+            className={`font-zona-bold text-[10px] text-center ${monthlyGoal.length > 0 ? "text-zinc-100" : "text-[#920036]"}`}
           >
             {monthlyGoalFormatted}
           </Text>

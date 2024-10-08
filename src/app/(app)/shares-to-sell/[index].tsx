@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
   ActivityIndicator,
 } from "react-native";
 import * as FileSystem from "expo-file-system";
@@ -12,7 +11,6 @@ import { useLocalSearchParams } from "expo-router";
 import { Title } from "@/components/title";
 import { Back } from "@/components/back";
 import { BottomButton } from "@/components/bottom-button";
-import { Ionicons } from "@expo/vector-icons";
 import { TIPS } from "@/constants/tips";
 import YoutubeIframe from "react-native-youtube-iframe";
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -20,18 +18,16 @@ import * as MediaLibrary from "expo-media-library";
 import { LinearGradient } from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
 import { Carousel } from "@/components/carousel";
+import { DownloadIconTurned } from "@/components/icons/download-icon-turned";
 
 export default function Share() {
   const { index } = useLocalSearchParams();
-  const { width } = Dimensions.get("window");
 
   const [isVideoReady, setIsVideoReady] = useState(false);
 
   const indexNumber = Number.parseInt(index as string);
 
   const tip = TIPS[indexNumber];
-
-  const VIDEO_WIDTH = width - 16 * 2;
 
   const onFullScreenChange = useCallback((isFullScreen: boolean) => {
     if (isFullScreen) {
@@ -97,12 +93,12 @@ export default function Share() {
 
         <Title title={`Ação ${tip.title.toLowerCase()}`} />
 
-        <View className="justify-center my-2 p-4 items-center">
+        <View className="justify-center my-2 p-4 items-center w-full">
           <View
             style={{
               borderRadius: 20,
               overflow: "hidden",
-              width: VIDEO_WIDTH,
+              width: 340,
               height: isVideoReady ? 200 : 0,
             }}
           >
@@ -110,7 +106,7 @@ export default function Share() {
               videoId={tip.videoId}
               onFullScreenChange={onFullScreenChange}
               height={200}
-              width={VIDEO_WIDTH}
+              width={340}
               onReady={() => setIsVideoReady(true)}
             />
           </View>
@@ -119,7 +115,7 @@ export default function Share() {
         </View>
 
         <View className="items-center">
-          <View className="bg-[#640025] rounded-xl max-w-64 overflow-hidden max-h-[360px]">
+          <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[312px]">
             <LinearGradient
               colors={["#B90040", "#EF0052", "B90040", "#EF0052"]}
               start={[0, 0]}
@@ -131,13 +127,16 @@ export default function Share() {
               }}
             >
               <TouchableOpacity
-                className="bg-[#990039] rounded-xl flex-row items-center justify-center gap-x-2 p-4 w-64"
+                className="bg-[#990039] rounded-xl flex-row items-center justify-center gap-x-2 p-4 w-full"
                 onPress={downloadLinks}
                 accessible={true}
                 accessibilityLabel="Baixar todos os links"
               >
-                <Ionicons name="download" size={24} color="#EF0052" />
-                <Text className="text-zinc-100 text-center text-base font-zona-semibold">
+                <DownloadIconTurned
+                  style={{ position: "absolute", left: 18 }}
+                />
+
+                <Text className="text-zinc-100 text-center text-lg font-zona-semibold">
                   Baixar todos os links
                 </Text>
               </TouchableOpacity>
@@ -147,7 +146,7 @@ export default function Share() {
           </View>
         </View>
 
-        <View className="items-center flex-row justify-center mt-10">
+        <View className="items-center flex-row justify-center mt-6">
           <BottomButton />
         </View>
       </ScrollView>

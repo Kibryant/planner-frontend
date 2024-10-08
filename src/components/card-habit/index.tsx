@@ -67,9 +67,8 @@ export function CardHabit({ selectedHabit }: CardHabitProps) {
 
   return (
     <View style={styles.container}>
-      {/* Título dinâmico */}
       <View className="p-6">
-        <Text className="text-zinc-100 text-2xl font-zona-semibold max-w-60">
+        <Text className="text-zinc-100 text-2xl font-zona-regular max-w-60">
           {habitTitles[selectedHabit] || "Hábito selecionado"}
         </Text>
       </View>
@@ -86,7 +85,6 @@ export function CardHabit({ selectedHabit }: CardHabitProps) {
         ref={carouselRef}
       />
 
-      {/* Tracinhos de navegação */}
       <View style={styles.sliderContainer}>
         {images.map((_, index) => (
           <View
@@ -105,7 +103,7 @@ export function CardHabit({ selectedHabit }: CardHabitProps) {
 const styles = StyleSheet.create({
   container: {
     height: 300,
-    width: 284,
+    width: 300,
     backgroundColor: "#4F001D",
     borderRadius: 24,
     overflow: "hidden",
@@ -117,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 284,
+    width: 300,
   },
   gradient: {
     position: "absolute",

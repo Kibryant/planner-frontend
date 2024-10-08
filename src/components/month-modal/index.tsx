@@ -49,8 +49,8 @@ export function MonthModal({
       onRequestClose={() => setModalVisible(false)}
     >
       <View className="flex-1 justify-center items-center bg-black/80">
-        <View className="bg-zinc-200 rounded-2xl p-6 w-4/5">
-          <Text className="text-zinc-800 text-lg font-zona-semibold mb-4">
+        <View className="bg-[#4F001D] rounded-2xl p-6 w-4/5">
+          <Text className="text-zinc-100 text-lg font-zona-semibold mb-4">
             Selecione o Mês
           </Text>
 
@@ -58,10 +58,10 @@ export function MonthModal({
             {months.map((month) => (
               <TouchableOpacity
                 key={month}
-                className="p-4 border-b border-zinc-500"
+                className="p-4 border-b border-zinc-300"
                 onPress={() => onSelectMonth(month)}
               >
-                <Text className="text-zinc-800 text-lg capitalize font-zona-regular">
+                <Text className="text-zinc-100 text-lg capitalize font-zona-regular">
                   {month}
                 </Text>
               </TouchableOpacity>
@@ -72,7 +72,9 @@ export function MonthModal({
             className="mt-4 bg-primary rounded-full py-3"
             onPress={() => setModalVisible(false)}
           >
-            <Text className="text-zinc-100 text-center">Fechar</Text>
+            <Text className="text-zinc-100 text-center font-zona-regular">
+              Fechar
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
