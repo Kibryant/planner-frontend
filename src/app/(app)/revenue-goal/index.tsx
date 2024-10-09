@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import { Title } from "@/components/title";
 import { Back } from "@/components/back";
 import { MONTHS } from "@/constants/months";
@@ -109,7 +109,7 @@ export default function RevenueGoal() {
   }
 
   return (
-    <View className="px-8 bg-zinc-950 flex-1">
+    <ScrollView className="px-8 bg-zinc-950 flex-1">
       <Back />
       <Title title="Meta de faturamento" />
 
@@ -158,6 +158,6 @@ export default function RevenueGoal() {
         }}
         months={MONTHS_BR}
       />
-    </View>
+    </ScrollView>
   );
 }

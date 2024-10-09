@@ -2,7 +2,7 @@ import {
   Animated,
   Easing,
   Modal,
-  ScrollView,
+  Pressable,
   Text,
   TextInput,
   TouchableOpacity,
@@ -148,50 +148,47 @@ export function Actions({
           <Feather name="chevron-down" size={24} color="#FF005E" />
         </Animated.View>
       </View>
+
       {actions.length < 4 && (
-        <TouchableOpacity
-          onPress={() => handleAction(0)}
+        <Pressable
+          onPress={() => handleAction(actions.length)}
           className="bg-[#4F001D] rounded-xl p-6 mb-2"
         >
           <Text className="text-center font-zona-regular text-xs text-[#920036]">
             Clique para adicionar sua ação {actions.length + 1}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
 
-      {actions.length > 0 && (
-        <ScrollView>
-          {actions.map((action, index) => {
-            return (
-              <LinearGradient
-                colors={["#EF0052", "#4E001D"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{
-                  padding: 1,
-                  borderRadius: 12,
-                  marginBottom: 8,
-                }}
-                key={`action-${index + 1}`}
+      {actions.length > 0 &&
+        actions.map((action, index) => (
+          <LinearGradient
+            colors={["#EF0052", "#4E001D"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={{
+              padding: 1,
+              borderRadius: 12,
+              marginBottom: 8,
+            }}
+            key={`action-${index + 1}`}
+          >
+            <Pressable
+              className="bg-[#4F001D] rounded-xl p-6"
+              onPress={() => handleAction(index)}
+            >
+              <Text
+                className={`text-center font-zona-regular text-xs ${
+                  action ? "text-zinc-100" : "text-[#920036]"
+                }`}
               >
-                <TouchableOpacity
-                  key={action}
-                  className="bg-[#4F001D] rounded-xl p-6"
-                  onPress={() => handleAction(index)}
-                >
-                  <Text
-                    className={`text-center font-zona-regular text-xs ${action ? "text-zinc-100" : "text-[#920036]"}`}
-                  >
-                    {action
-                      ? action
-                      : `Clique para adicionar sua ação ${index + 1}`}
-                  </Text>
-                </TouchableOpacity>
-              </LinearGradient>
-            );
-          })}
-        </ScrollView>
-      )}
+                {action
+                  ? action
+                  : `Clique para adicionar sua ação ${index + 1}`}
+              </Text>
+            </Pressable>
+          </LinearGradient>
+        ))}
 
       <Modal
         transparent={true}
