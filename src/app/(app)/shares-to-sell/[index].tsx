@@ -26,6 +26,7 @@ export default function Share() {
   const [isVideoReady, setIsVideoReady] = useState(false);
 
   const indexNumber = Number.parseInt(index as string);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const tip = TIPS[indexNumber];
 
@@ -37,13 +38,22 @@ export default function Share() {
     }
   }, []);
 
-  const saveToGallery = async (fileUri: string) => {
+  const saveToGallery = async (fileUrl: string) => {
     const { status } = await MediaLibrary.requestPermissionsAsync();
 
     if (status === "granted") {
+      setIsDownloading(true);
       try {
-        const asset = await MediaLibrary.createAssetAsync(fileUri);
-        await MediaLibrary.createAlbumAsync("Download", asset, false);
+        const documentDirectory = FileSystem.documentDirectory;
+        if (!documentDirectory) {
+          throw new Error("Document directory is not available");
+        }
+
+        const fileUri = documentDirectory + fileUrl.split("/").pop();
+
+        const downloadResult = await FileSystem.downloadAsync(fileUrl, fileUri);
+
+        await MediaLibrary.createAssetAsync(downloadResult.uri);
         Toast.show({
           type: "success",
           text1: "Salvo na galeria",
@@ -55,6 +65,8 @@ export default function Share() {
           text1: "Erro ao salvar na galeria",
           text2: "Ocorreu um erro ao salvar o arquivo na galeria",
         });
+      } finally {
+        setIsDownloading(false);
       }
     } else {
       Toast.show({
@@ -69,13 +81,21 @@ export default function Share() {
     const links = [
       {
         name: "camuflagem-feed.png",
-        url: "https://github.com/Kibryant.png",
+        url: "https://conteudo.imguol.com.br/c/noticias/1c/2022/05/24/imagem-criada-no-imagen-prototipo-do-google-que-cria-imagens-baseadas-em-texto-neste-caso-um-cachorro-corgi-andando-de-bicicleta-na-times-square-usando-oculos-de-sol-e-chapeu-de-praia-1653397634334_v2_900x506.jpg",
+      },
+      {
+        name: "camuflagem-stories.png",
+        url: "https://conteudo.imguol.com.br/c/noticias/1c/2022/05/24/imagem-criada-no-imagen-prototipo-do-google-que-cria-imagens-baseadas-em-texto-neste-caso-um-cachorro-corgi-andando-de-bicicleta-na-times-square-usando-oculos-de-sol-e-chapeu-de-praia-1653397634334_v2_900x506.jpg",
+      },
+      {
+        name: "camuflagem-whatsapp.png",
+        url: "https://conteudo.imguol.com.br/c/noticias/1c/2022/05/24/imagem-criada-no-imagen-prototipo-do-google-que-cria-imagens-baseadas-em-texto-neste-caso-um-cachorro-corgi-andando-de-bicicleta-na-times-square-usando-oculos-de-sol-e-chapeu-de-praia-1653397634334_v2_900x506.jpg",
       },
     ];
 
     for (const link of links) {
       try {
-        await saveToGallery(FileSystem.documentDirectory + link.name);
+        await saveToGallery(link.url);
       } catch {
         Toast.show({
           type: "error",
@@ -131,14 +151,21 @@ export default function Share() {
                 onPress={downloadLinks}
                 accessible={true}
                 accessibilityLabel="Baixar todos os links"
+                disabled={isDownloading}
               >
-                <DownloadIconTurned
-                  style={{ position: "absolute", left: 52 }}
-                />
+                {isDownloading ? (
+                  <ActivityIndicator size="small" color="#fe017f" />
+                ) : (
+                  <>
+                    <DownloadIconTurned
+                      style={{ position: "absolute", left: 52 }}
+                    />
 
-                <Text className="text-zinc-100 text-center text-lg font-zona-semibold">
-                  Baixar todos os links
-                </Text>
+                    <Text className="text-zinc-100 text-center text-lg font-zona-semibold">
+                      Baixar todos os links
+                    </Text>
+                  </>
+                )}
               </TouchableOpacity>
             </LinearGradient>
 
