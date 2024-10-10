@@ -13,6 +13,7 @@ import { HttpStatusCode } from "axios";
 import { DailyGoal } from "@/components/daily-goal";
 import { MonthlyGoal } from "@/components/monthly-goal";
 import { Actions } from "@/components/actions";
+import { BottomButton } from "@/components/bottom-button";
 
 const MONTHS_BR = [
   "janeiro",
@@ -158,6 +159,10 @@ export default function RevenueGoal() {
         }}
         months={MONTHS_BR}
       />
+
+      <View className="items-center flex-row justify-center mt-6">
+        <BottomButton />
+      </View>
     </ScrollView>
   );
 }

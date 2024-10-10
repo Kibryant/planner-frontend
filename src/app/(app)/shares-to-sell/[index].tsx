@@ -78,20 +78,7 @@ export default function Share() {
   };
 
   const downloadLinks = async () => {
-    const links = [
-      {
-        name: "camuflagem-feed.png",
-        url: "https://conteudo.imguol.com.br/c/noticias/1c/2022/05/24/imagem-criada-no-imagen-prototipo-do-google-que-cria-imagens-baseadas-em-texto-neste-caso-um-cachorro-corgi-andando-de-bicicleta-na-times-square-usando-oculos-de-sol-e-chapeu-de-praia-1653397634334_v2_900x506.jpg",
-      },
-      {
-        name: "camuflagem-stories.png",
-        url: "https://conteudo.imguol.com.br/c/noticias/1c/2022/05/24/imagem-criada-no-imagen-prototipo-do-google-que-cria-imagens-baseadas-em-texto-neste-caso-um-cachorro-corgi-andando-de-bicicleta-na-times-square-usando-oculos-de-sol-e-chapeu-de-praia-1653397634334_v2_900x506.jpg",
-      },
-      {
-        name: "camuflagem-whatsapp.png",
-        url: "https://conteudo.imguol.com.br/c/noticias/1c/2022/05/24/imagem-criada-no-imagen-prototipo-do-google-que-cria-imagens-baseadas-em-texto-neste-caso-um-cachorro-corgi-andando-de-bicicleta-na-times-square-usando-oculos-de-sol-e-chapeu-de-praia-1653397634334_v2_900x506.jpg",
-      },
-    ];
+    const links = tip.links;
 
     for (const link of links) {
       try {
@@ -169,7 +156,7 @@ export default function Share() {
               </TouchableOpacity>
             </LinearGradient>
 
-            <Carousel />
+            <Carousel links={tip.links} />
           </View>
         </View>
 

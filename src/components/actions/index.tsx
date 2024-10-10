@@ -9,13 +9,13 @@ import {
   View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import type { MONTHS } from "@/constants/months";
 import { Feather } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
 import Toast from "react-native-toast-message";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HttpStatusCode } from "axios";
 import { api } from "@/lib/api";
+import type { MONTHS } from "@/constants/months";
 
 interface ActionsProps {
   MONTH: (typeof MONTHS)[keyof typeof MONTHS];
@@ -137,11 +137,14 @@ export function Actions({
     mutation.mutate(actionText);
   };
 
+  // Garante que o array tenha 4 ações, preenchendo com strings vazias
+  const actionsList = [...actions, ...Array(4 - actions.length).fill("")];
+
   return (
     <>
       <View className="justify-center items-center mb-2">
         <Text className="text-zinc-100 text-center font-zona-bold">
-          Defina 4 ações que você fará para atingir a meta de pacotes vendidos
+          Defina 4 ações que você fará para atingir a sua meta de faturamento
         </Text>
 
         <Animated.View style={{ transform: [{ translateY: bounceValue }] }}>
@@ -149,46 +152,21 @@ export function Actions({
         </Animated.View>
       </View>
 
-      {actions.length < 4 && (
+      {actionsList.map((action, index) => (
         <Pressable
-          onPress={() => handleAction(actions.length)}
+          key={`action-${index + 1}`}
           className="bg-[#4F001D] rounded-xl p-6 mb-2"
+          onPress={() => handleAction(index)}
         >
-          <Text className="text-center font-zona-regular text-xs text-[#920036]">
-            Clique para adicionar sua ação {actions.length + 1}
+          <Text
+            className={`text-center font-zona-regular text-xs ${
+              action ? "text-zinc-100" : "text-[#920036]"
+            }`}
+          >
+            {action ? action : `Ação ${index + 1}`}
           </Text>
         </Pressable>
-      )}
-
-      {actions.length > 0 &&
-        actions.map((action, index) => (
-          <LinearGradient
-            colors={["#EF0052", "#4E001D"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={{
-              padding: 1,
-              borderRadius: 12,
-              marginBottom: 8,
-            }}
-            key={`action-${index + 1}`}
-          >
-            <Pressable
-              className="bg-[#4F001D] rounded-xl p-6"
-              onPress={() => handleAction(index)}
-            >
-              <Text
-                className={`text-center font-zona-regular text-xs ${
-                  action ? "text-zinc-100" : "text-[#920036]"
-                }`}
-              >
-                {action
-                  ? action
-                  : `Clique para adicionar sua ação ${index + 1}`}
-              </Text>
-            </Pressable>
-          </LinearGradient>
-        ))}
+      ))}
 
       <Modal
         transparent={true}
