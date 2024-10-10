@@ -5,12 +5,12 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import * as FileSystem from "expo-file-system";
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { Title } from "@/components/title";
 import { Back } from "@/components/back";
-import { BottomButton } from "@/components/bottom-button";
 import { TIPS } from "@/constants/tips";
 import YoutubeIframe from "react-native-youtube-iframe";
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -19,6 +19,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
 import { Carousel } from "@/components/carousel";
 import { DownloadIconTurned } from "@/components/icons/download-icon-turned";
+import { HomeIcon } from "@/components/icons/home-icon";
+
+const screenHeight = Dimensions.get("screen").height;
 
 export default function Share() {
   const { index } = useLocalSearchParams();
@@ -94,18 +97,12 @@ export default function Share() {
   };
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: "#09090b", paddingHorizontal: 28 }}
-      contentContainerStyle={{
-        justifyContent: "space-between",
-        gap: 12,
-      }}
-    >
+    <ScrollView className="bg-zinc-950 px-8" style={{ height: screenHeight }}>
       <Back />
 
       <Title title={`Ação ${tip.title.toLowerCase()}`} />
 
-      <View className="justify-center py-4 items-center w-full">
+      <View className="items-center w-full mt-10 gap-y-2 h-full">
         <View
           style={{
             borderRadius: 20,
@@ -124,10 +121,8 @@ export default function Share() {
         </View>
 
         {!isVideoReady && <ActivityIndicator size="large" color="#fe017f" />}
-      </View>
 
-      <View className="items-center">
-        <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[560px] max-w-[333px]">
+        <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-w-[333px] h-full max-h-[360px]">
           <LinearGradient
             colors={["#B90040", "#EF0052", "B90040", "#EF0052"]}
             start={[0, 0]}
@@ -163,10 +158,17 @@ export default function Share() {
 
           <Carousel links={tip.links} />
         </View>
-      </View>
 
-      <View style={{ marginTop: 36, alignItems: "center" }}>
-        <BottomButton />
+        <Link href="/" asChild>
+          <TouchableOpacity
+            className="bg-primary w-16 h-16 rounded-full justify-center items-center my-24"
+            accessibilityLabel="Botão Home"
+            accessibilityHint="Clique para voltar para o menu principal"
+            activeOpacity={0.8}
+          >
+            <HomeIcon fill={"#940037"} className={`w-8 h-8 "ext-[#940037] `} />
+          </TouchableOpacity>
+        </Link>
       </View>
     </ScrollView>
   );
