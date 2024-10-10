@@ -127,7 +127,7 @@ export default function Share() {
       </View>
 
       <View className="items-center">
-        <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[480px] max-w-[333px]">
+        <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[560px] max-w-[333px]">
           <LinearGradient
             colors={["#B90040", "#EF0052", "B90040", "#EF0052"]}
             start={[0, 0]}
