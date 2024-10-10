@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Dimensions,
 } from "react-native";
 import * as FileSystem from "expo-file-system";
 import { useLocalSearchParams } from "expo-router";
@@ -23,7 +22,6 @@ import { DownloadIconTurned } from "@/components/icons/download-icon-turned";
 
 export default function Share() {
   const { index } = useLocalSearchParams();
-  const { height } = Dimensions.get("window");
 
   const [isVideoReady, setIsVideoReady] = useState(false);
 
@@ -97,14 +95,17 @@ export default function Share() {
 
   return (
     <ScrollView
-      className="flex-1 px-8 bg-zinc-950"
-      contentContainerStyle={{ justifyContent: "space-between" }}
+      style={{ flex: 1, backgroundColor: "#09090b", paddingHorizontal: 28 }}
+      contentContainerStyle={{
+        justifyContent: "space-between",
+        gap: 12,
+      }}
     >
       <Back />
 
       <Title title={`Ação ${tip.title.toLowerCase()}`} />
 
-      <View className="justify-center my-2 p-4 items-center w-full">
+      <View className="justify-center py-4 items-center w-full">
         <View
           style={{
             borderRadius: 20,
@@ -164,12 +165,7 @@ export default function Share() {
         </View>
       </View>
 
-      <View
-        className="items-center flex-row justify-center"
-        style={{
-          marginTop: height > 2532 ? 80 : 40,
-        }}
-      >
+      <View style={{ marginTop: 28, alignItems: "center" }}>
         <BottomButton />
       </View>
     </ScrollView>
