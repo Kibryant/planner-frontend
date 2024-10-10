@@ -160,7 +160,7 @@ export default function Share() {
           </View>
         </View>
 
-        <View className="items-center flex-row justify-center mt-6">
+        <View className="items-center flex-row justify-center mt-10">
           <BottomButton />
         </View>
       </ScrollView>
