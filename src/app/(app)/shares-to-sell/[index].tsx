@@ -127,7 +127,7 @@ export default function Share() {
       </View>
 
       <View className="items-center">
-        <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[312px] max-w-[333px]">
+        <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[480px] max-w-[333px]">
           <LinearGradient
             colors={["#B90040", "#EF0052", "B90040", "#EF0052"]}
             start={[0, 0]}
@@ -165,7 +165,7 @@ export default function Share() {
         </View>
       </View>
 
-      <View style={{ marginTop: 28, alignItems: "center" }}>
+      <View style={{ marginTop: 36, alignItems: "center" }}>
         <BottomButton />
       </View>
     </ScrollView>
