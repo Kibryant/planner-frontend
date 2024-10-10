@@ -94,76 +94,77 @@ export default function Share() {
   };
 
   return (
-    <View className="flex-1 bg-zinc-950">
-      <ScrollView className="flex-1 px-8">
-        <Back />
+    <ScrollView
+      className="flex-1 px-8 bg-zinc-950"
+      contentContainerStyle={{ justifyContent: "space-between" }}
+    >
+      <Back />
 
-        <Title title={`Ação ${tip.title.toLowerCase()}`} />
+      <Title title={`Ação ${tip.title.toLowerCase()}`} />
 
-        <View className="justify-center my-2 p-4 items-center w-full">
-          <View
+      <View className="justify-center my-2 p-4 items-center w-full">
+        <View
+          style={{
+            borderRadius: 20,
+            overflow: "hidden",
+            width: 340,
+            height: isVideoReady ? 200 : 0,
+          }}
+        >
+          <YoutubeIframe
+            videoId={tip.videoId}
+            onFullScreenChange={onFullScreenChange}
+            height={200}
+            width={340}
+            onReady={() => setIsVideoReady(true)}
+          />
+        </View>
+
+        {!isVideoReady && <ActivityIndicator size="large" color="#fe017f" />}
+      </View>
+
+      <View className="items-center">
+        <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[312px] max-w-[333px]">
+          <LinearGradient
+            colors={["#B90040", "#EF0052", "B90040", "#EF0052"]}
+            start={[0, 0]}
+            end={[1, 1]}
             style={{
-              borderRadius: 20,
-              overflow: "hidden",
-              width: 340,
-              height: isVideoReady ? 200 : 0,
+              borderRadius: 12,
+              padding: 1,
+              width: "100%",
             }}
           >
-            <YoutubeIframe
-              videoId={tip.videoId}
-              onFullScreenChange={onFullScreenChange}
-              height={200}
-              width={340}
-              onReady={() => setIsVideoReady(true)}
-            />
-          </View>
-
-          {!isVideoReady && <ActivityIndicator size="large" color="#fe017f" />}
-        </View>
-
-        <View className="items-center">
-          <View className="bg-[#640025] rounded-xl w-full overflow-hidden max-h-[312px] max-w-[333px]">
-            <LinearGradient
-              colors={["#B90040", "#EF0052", "B90040", "#EF0052"]}
-              start={[0, 0]}
-              end={[1, 1]}
-              style={{
-                borderRadius: 12,
-                padding: 1,
-                width: "100%",
-              }}
+            <TouchableOpacity
+              className="bg-[#990039] rounded-xl flex-row items-center justify-center gap-x-2 p-4 w-full"
+              onPress={downloadLinks}
+              accessible={true}
+              accessibilityLabel="Baixar todos os links"
+              disabled={isDownloading}
             >
-              <TouchableOpacity
-                className="bg-[#990039] rounded-xl flex-row items-center justify-center gap-x-2 p-4 w-full"
-                onPress={downloadLinks}
-                accessible={true}
-                accessibilityLabel="Baixar todos os links"
-                disabled={isDownloading}
-              >
-                {isDownloading ? (
-                  <ActivityIndicator size="small" color="#fe017f" />
-                ) : (
-                  <>
-                    <DownloadIconTurned
-                      style={{ position: "absolute", left: 52 }}
-                    />
+              {isDownloading ? (
+                <ActivityIndicator size="small" color="#fe017f" />
+              ) : (
+                <>
+                  <DownloadIconTurned
+                    style={{ position: "absolute", left: 52 }}
+                  />
 
-                    <Text className="text-zinc-100 text-center text-lg font-zona-semibold">
-                      Baixar todos os links
-                    </Text>
-                  </>
-                )}
-              </TouchableOpacity>
-            </LinearGradient>
+                  <Text className="text-zinc-100 text-center text-lg font-zona-semibold">
+                    Baixar todos os links
+                  </Text>
+                </>
+              )}
+            </TouchableOpacity>
+          </LinearGradient>
 
-            <Carousel links={tip.links} />
-          </View>
+          <Carousel links={tip.links} />
         </View>
+      </View>
 
-        <View className="items-center flex-row justify-center mt-10">
-          <BottomButton />
-        </View>
-      </ScrollView>
-    </View>
+      <View className="items-center flex-row justify-center mt-10">
+        <BottomButton />
+      </View>
+    </ScrollView>
   );
 }
