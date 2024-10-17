@@ -1,4 +1,3 @@
-import { logoHorizontal } from "@/constants/logo-horizontal";
 import { Link, Redirect } from "expo-router";
 import React from "react";
 import {
@@ -15,6 +14,7 @@ import {
 import { useUserStore } from "@/store/user-store";
 import { useAdminStore } from "@/store/admin-store";
 import { LoginForm } from "@/components/login-form";
+import { logo } from "@/constants/logo";
 
 const { width } = Dimensions.get("window");
 
@@ -39,8 +39,8 @@ export default function Index() {
         <View className="flex-1 bg-zinc-950 justify-center items-center px-8">
           <View className="mb-12">
             <Image
-              source={logoHorizontal}
-              className="w-[265.54px] h-[111.38px]"
+              source={logo}
+              style={{ width: width * 0.5, height: width * 0.5 }}
               resizeMode="contain"
               accessibilityLabel="Logo da Mecha Turbo"
             />
@@ -52,10 +52,7 @@ export default function Index() {
           >
             Boas vindas!
           </Text>
-          <Text
-            className="text-gray-400 mb-6"
-            style={{ fontSize: width * 0.04 }}
-          >
+          <Text className="text-gray-400 mb-6 text-lg font-zona-regular text-center">
             Faca seu login para acessar o planner
           </Text>
 

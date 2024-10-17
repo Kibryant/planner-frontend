@@ -1,4 +1,4 @@
-import { logoHorizontal } from "@/constants/logo-horizontal";
+import { logo } from "@/constants/logo";
 import {
   type AdminLoginSchema,
   adminLoginSchema,
@@ -77,8 +77,8 @@ export default function Index() {
         >
           <View className="mb-12" style={{ marginBottom: height * 0.05 }}>
             <Image
-              source={logoHorizontal} // Substitua pela logo correta
-              className="w-[265.54px] h-[111.38px]"
+              source={logo}
+              style={{ width: width * 0.5, height: width * 0.5 }}
               resizeMode="contain"
               accessibilityLabel="Logo da Mecha Turbo"
             />

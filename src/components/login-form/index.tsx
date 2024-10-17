@@ -117,9 +117,7 @@ export function LoginForm() {
         onPress={handleSubmit(handleLogin)}
         disabled={mutation.isPending}
       >
-        <Text className="text-white text-lg" style={{ fontSize: width * 0.05 }}>
-          Acessar
-        </Text>
+        <Text className="text-center text-white font-zona-bold">Acessar</Text>
       </TouchableOpacity>
     </>
   );
