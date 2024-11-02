@@ -25,6 +25,8 @@ export default function PostPlanning() {
       }),
   });
 
+  console.log(data);
+
   return (
     <Layout title="Planejamento de Postagens">
       <View className="mt-10 flex flex-row flex-wrap justify-center gap-x-3 gap-y-4 px-5">

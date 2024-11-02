@@ -1,19 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import { Title } from "@/components/title";
 import { Back } from "@/components/back";
-import { MONTHS } from "@/constants/months";
 import { MonthSelector } from "@/components/month-selector";
 import { MonthModal } from "@/components/month-modal";
-import { useQuery } from "@tanstack/react-query";
-import { api } from "@/lib/api";
-import { useUserStore } from "@/store/user-store";
-import { useAdminStore } from "@/store/admin-store";
-import { HttpStatusCode } from "axios";
 import { DailyGoal } from "@/components/daily-goal";
 import { MonthlyGoal } from "@/components/monthly-goal";
 import { Actions } from "@/components/actions";
 import { BottomButton } from "@/components/bottom-button";
+import { useRevenueGoal } from "@/hooks/useRevenueGoal";
 
 const MONTHS_BR = [
   "janeiro",
@@ -30,64 +25,19 @@ const MONTHS_BR = [
   "dezembro",
 ] as const;
 
-const MONTHS_EN = {
-  janeiro: "JANUARY",
-  fevereiro: "FEBRUARY",
-  março: "MARCH",
-  abril: "APRIL",
-  maio: "MAY",
-  junho: "JUNE",
-  julho: "JULY",
-  agosto: "AUGUST",
-  setembro: "SEPTEMBER",
-  outubro: "OCTOBER",
-  novembro: "NOVEMBER",
-  dezembro: "DECEMBER",
-} as const;
-
-interface RevenueGoalResponse {
-  revenueGoal: {
-    actions: string[];
-    month: typeof MONTHS;
-    dailyGoal: string;
-    monthlyGoal: string;
-  };
-}
-
 export default function RevenueGoal() {
-  const { user, token: tokenUser } = useUserStore();
+  const {
+    data,
+    status,
+    selectedMonth,
+    setSelectedMonth,
+    selectedMonthEn,
+    token,
+    userId,
+    actualMonth,
+  } = useRevenueGoal();
 
-  const admin = useAdminStore((state) => state.admin);
-  const token = tokenUser || admin?.token || "";
-  const userId = user?.id || admin?.admin.id || "";
-  const actualMonthInNumber = new Date().getMonth();
-  const actualMonthBr = MONTHS_BR[actualMonthInNumber];
-  const actualMonth = MONTHS[actualMonthInNumber];
-
-  const [selectedMonth, setSelectedMonth] = useState(actualMonthBr);
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const selectedMonthEn = MONTHS_EN[selectedMonth];
-
-  const { data, status } = useQuery({
-    queryKey: [`revenue-goal-${selectedMonthEn}`],
-    queryFn: async () => {
-      const response = await api.get<RevenueGoalResponse>(
-        `/user/get-revenue-goals-by-month?userId=${userId}&month=${selectedMonthEn}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token || admin?.token || ""}`,
-          },
-        },
-      );
-
-      if (response.status !== HttpStatusCode.Ok) {
-        throw new Error("Erro ao buscar meta de faturamento");
-      }
-
-      return response.data;
-    },
-  });
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   if (status === "pending") {
     return (

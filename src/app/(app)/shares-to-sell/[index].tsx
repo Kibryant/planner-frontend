@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -7,97 +7,43 @@ import {
   ActivityIndicator,
   Dimensions,
 } from "react-native";
-import * as FileSystem from "expo-file-system";
 import { Link, useLocalSearchParams } from "expo-router";
 import { Title } from "@/components/title";
 import { Back } from "@/components/back";
-import { TIPS } from "@/constants/tips";
+import { type Tip, TIPS } from "@/constants/tips";
 import YoutubeIframe from "react-native-youtube-iframe";
-import * as ScreenOrientation from "expo-screen-orientation";
-import * as MediaLibrary from "expo-media-library";
 import { LinearGradient } from "expo-linear-gradient";
-import Toast from "react-native-toast-message";
 import { Carousel } from "@/components/carousel";
 import { DownloadIconTurned } from "@/components/icons/download-icon-turned";
 import { HomeIcon } from "@/components/icons/home-icon";
+import { useShare } from "@/hooks/useShare";
 
 const screenHeight = Dimensions.get("screen").height;
 
 export default function Share() {
   const { index } = useLocalSearchParams();
 
-  const [isVideoReady, setIsVideoReady] = useState(false);
+  const myIndex = Array.isArray(index) ? index[0] : index;
 
-  const indexNumber = Number.parseInt(index as string);
-  const [isDownloading, setIsDownloading] = useState(false);
+  const indexNumber = parseInt(myIndex, 10);
 
-  const tip = TIPS[indexNumber];
+  const {
+    isVideoReady,
+    isStepByStepVideoReady,
+    isDownloading,
+    setIsVideoReady,
+    setIsStepByStepVideoReady,
+    onFullScreenChange,
+    downloadLinks,
+  } = useShare({ index: myIndex });
 
-  const onFullScreenChange = useCallback((isFullScreen: boolean) => {
-    if (isFullScreen) {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    } else {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    }
-  }, []);
-
-  const saveToGallery = async (fileUrl: string) => {
-    const { status } = await MediaLibrary.requestPermissionsAsync();
-
-    if (status === "granted") {
-      setIsDownloading(true);
-      try {
-        const documentDirectory = FileSystem.documentDirectory;
-        if (!documentDirectory) {
-          throw new Error("Document directory is not available");
-        }
-
-        const fileUri = documentDirectory + fileUrl.split("/").pop();
-
-        const downloadResult = await FileSystem.downloadAsync(fileUrl, fileUri);
-
-        await MediaLibrary.createAssetAsync(downloadResult.uri);
-        Toast.show({
-          type: "success",
-          text1: "Salvo na galeria",
-          text2: "O arquivo foi salvo na galeria com sucesso",
-        });
-      } catch {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao salvar na galeria",
-          text2: "Ocorreu um erro ao salvar o arquivo na galeria",
-        });
-      } finally {
-        setIsDownloading(false);
-      }
-    } else {
-      Toast.show({
-        type: "error",
-        text1: "Permissão negada",
-        text2: "Você precisa permitir o acesso à galeria para salvar o arquivo",
-      });
-    }
-  };
-
-  const downloadLinks = async () => {
-    const links = tip.links;
-
-    for (const link of links) {
-      try {
-        await saveToGallery(link.url);
-      } catch {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao baixar",
-          text2: "Ocorreu um erro ao baixar o arquivo",
-        });
-      }
-    }
-  };
+  const tip: Tip = TIPS[indexNumber];
 
   return (
-    <ScrollView className="bg-zinc-950 px-8" style={{ height: screenHeight }}>
+    <ScrollView
+      className="bg-zinc-950 px-8"
+      style={{ height: screenHeight, paddingBottom: 120 }}
+    >
       <Back />
 
       <Title title={`Ação ${tip.title.toLowerCase()}`} />
@@ -158,6 +104,35 @@ export default function Share() {
 
           <Carousel links={tip.links} />
         </View>
+
+        {tip.stepByStepVideoId && (
+          <View className="w-full mt-10 gap-4">
+            <Text className="text-primary text-center text-xl font-zona-semibold">
+              Passo a passo
+            </Text>
+
+            <View
+              style={{
+                borderRadius: 20,
+                overflow: "hidden",
+                width: 340,
+                height: isStepByStepVideoReady ? 200 : 0,
+              }}
+            >
+              <YoutubeIframe
+                videoId={tip.stepByStepVideoId}
+                onFullScreenChange={onFullScreenChange}
+                height={200}
+                width={340}
+                onReady={() => setIsStepByStepVideoReady(true)}
+              />
+            </View>
+
+            {!isStepByStepVideoReady && (
+              <ActivityIndicator size="large" color="#fe017f" />
+            )}
+          </View>
+        )}
 
         <Link href="/" asChild>
           <TouchableOpacity

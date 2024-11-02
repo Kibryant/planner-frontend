@@ -1,14 +1,9 @@
 import { logo } from "@/constants/logo";
-import {
-  type AdminLoginSchema,
-  adminLoginSchema,
-} from "@/schema/admin-login-schema";
+import { useLoginAdmin } from "@/hooks/useLoginAdmin";
 import { useAdminStore } from "@/store/admin-store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { Link, Redirect, router } from "expo-router";
+import { Link, Redirect } from "expo-router";
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import {
   View,
   Text,
@@ -22,44 +17,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import Toast from "react-native-toast-message";
 
 const { width, height } = Dimensions.get("window");
 
 export default function Index() {
-  const { login, admin } = useAdminStore();
+  const admin = useAdminStore((state) => state.admin);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AdminLoginSchema>({
-    resolver: zodResolver(adminLoginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      accessCode: "",
-    },
-  });
-
-  const mutation = useMutation({
-    mutationKey: ["admin-login"],
-    mutationFn: login,
-    onError: (error) => {
-      Toast.show({
-        type: "error",
-        text1: "Erro ao fazer login",
-        text2: error.message,
-      });
-    },
-    onSuccess: () => {
-      router.replace("/admin");
-    },
-  });
-
-  const handleLogin = (data: AdminLoginSchema) => {
-    mutation.mutate(data);
-  };
+  const { mutation, handleLogin, handleSubmit, control, errors } =
+    useLoginAdmin();
 
   if (admin) {
     return <Redirect href="/admin" />;
@@ -166,9 +131,10 @@ export default function Index() {
           </View>
 
           <TouchableOpacity
-            className={`w-full h-12 rounded-lg justify-center items-center ${
-              mutation.isPending ? "bg-primary/80" : "bg-primary"
-            }`}
+            // eslint-disable-next-line prettier/prettier
+            className={`w-full h-12 rounded-lg justify-center items-center ${mutation.isPending ? "bg-primary/80" : "bg-primary"
+              // eslint-disable-next-line prettier/prettier
+              }`}
             accessibilityRole="button"
             accessibilityLabel="Botão de acessar"
             accessibilityHint="Clique para fazer login"

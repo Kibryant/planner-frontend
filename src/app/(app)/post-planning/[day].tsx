@@ -31,6 +31,7 @@ import { completeDailyTask as completeDailyTaskFunction } from "@/functions/comp
 import { useAdminStore } from "@/store/admin-store";
 import { TaskCard } from "@/components/task-card";
 import { TaskPlaceholder } from "@/components/task-placeholder";
+import { deleteAllDailyTasks } from "@/functions/delete-all-daily-tasks-by-day";
 
 const MAX_TASKS = 5;
 
@@ -107,6 +108,8 @@ export default function PostPlanner() {
       });
     },
     onError: (error) => {
+      console.log(error);
+
       Toast.show({
         type: "error",
         text1: "Erro ao criar tarefa",
@@ -137,6 +140,34 @@ export default function PostPlanner() {
       Toast.show({
         type: "error",
         text1: "Erro ao completar tarefa",
+        text2: "Tente novamente",
+      });
+    },
+  });
+
+  const mutationDelete = useMutation({
+    mutationKey: ["delete-all-daily-tasks"],
+    mutationFn: deleteAllDailyTasks,
+    onSuccess: () => {
+      Toast.show({
+        type: "success",
+        text1: "Tarefas deletadas com sucesso",
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [`get-daily-tasks-by-day-${DAY}`],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["get-weekly-progress"],
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+
+      Toast.show({
+        type: "error",
+        text1: "Erro ao deletar tarefas",
         text2: "Tente novamente",
       });
     },
@@ -175,12 +206,27 @@ export default function PostPlanner() {
     });
   };
 
+  const handleDeleteAllDailyTasks = () => {
+    mutationDelete.mutate({
+      userId: user?.id || admin?.admin.id || "",
+      token: token || admin?.token || "",
+      day: DAY,
+    });
+  };
+
   return (
     <View className="flex-1 bg-zinc-950">
       <View className="flex-1 px-8">
         <Back />
 
         <Title title={day as string} />
+
+        <TouchableOpacity
+          onPress={handleDeleteAllDailyTasks}
+          className="bg-primary rounded-full p-2 w-16 h-16 items-center justify-center mt-4 absolute top-8 right-4"
+        >
+          <Feather name="trash" size={24} color="#f4f4f5" />
+        </TouchableOpacity>
 
         <View className="flex-1 mt-20">
           {tasks.map((task) => (
