@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import { Title } from "@/components/title";
 import { Back } from "@/components/back";
@@ -9,21 +9,7 @@ import { MonthlyGoal } from "@/components/monthly-goal";
 import { Actions } from "@/components/actions";
 import { BottomButton } from "@/components/bottom-button";
 import { useRevenueGoal } from "@/hooks/useRevenueGoal";
-
-const MONTHS_BR = [
-  "janeiro",
-  "fevereiro",
-  "março",
-  "abril",
-  "maio",
-  "junho",
-  "julho",
-  "agosto",
-  "setembro",
-  "outubro",
-  "novembro",
-  "dezembro",
-] as const;
+import { MONTHS_BR } from "@/constants/monts-br";
 
 export default function RevenueGoal() {
   const {
@@ -37,7 +23,7 @@ export default function RevenueGoal() {
     actualMonth,
   } = useRevenueGoal();
 
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   if (status === "pending") {
     return (

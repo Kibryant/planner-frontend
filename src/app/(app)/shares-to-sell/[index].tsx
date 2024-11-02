@@ -25,7 +25,7 @@ export default function Share() {
 
   const myIndex = Array.isArray(index) ? index[0] : index;
 
-  const indexNumber = parseInt(myIndex, 10);
+  const indexNumber = Number.parseInt(myIndex, 10);
 
   const {
     isVideoReady,
