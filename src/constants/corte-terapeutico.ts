@@ -1,7 +1,7 @@
 export const corteTerapeutico = {
   title: "Corte Terapêutico",
   thumbnail: "https://img.youtube.com/vi/R5kYioh2g4I/hqdefault.jpg",
-  stepByStepVideoId: "R5kYioh2g4I",
+  stepByStepVideoId: "magJ_cYllvk",
   videoId: "R5kYioh2g4I",
   links: [
     {
