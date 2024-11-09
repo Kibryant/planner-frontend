@@ -137,7 +137,6 @@ export function Actions({
     mutation.mutate(actionText);
   };
 
-  // Garante que o array tenha 4 ações, preenchendo com strings vazias
   const actionsList = [...actions, ...Array(4 - actions.length).fill("")];
 
   return (
@@ -159,6 +158,8 @@ export function Actions({
           onPress={() => handleAction(index)}
         >
           <Text
+            numberOfLines={1} // Limita o texto a uma linha
+            ellipsizeMode="tail" // Aplica o "..." no final do texto quando ultrapassa o limite
             className={`text-center font-zona-regular text-xs ${
               action ? "text-zinc-100" : "text-[#920036]"
             }`}
@@ -167,7 +168,6 @@ export function Actions({
           </Text>
         </Pressable>
       ))}
-
       <Modal
         transparent={true}
         visible={modalVisible}
@@ -201,9 +201,18 @@ export function Actions({
                 className="bg-[#47001B] rounded-lg w-full px-8 py-3 mt-4 min-w-80 text-zinc-100"
                 placeholder="Digite sua ação"
                 placeholderTextColor="#DD0354"
-                maxLength={50}
+                maxLength={200}
                 value={actionText}
                 onChangeText={setActionText}
+                multiline={true}
+                numberOfLines={4}
+                textAlignVertical="top"
+                style={{
+                  height: 100,
+                  maxHeight: 100,
+                  maxWidth: "80%",
+                  flexShrink: 1,
+                }}
               />
 
               <TouchableOpacity

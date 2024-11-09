@@ -14,6 +14,7 @@ export default function PostPlanning() {
   const admin = useAdminStore((state) => state.admin);
 
   const { width } = useWindowDimensions();
+
   const imageHeight = width * 0.38;
 
   const { data } = useQuery({
@@ -24,8 +25,6 @@ export default function PostPlanning() {
         token: token || admin?.token || "",
       }),
   });
-
-  console.log(data);
 
   return (
     <Layout title="Planejamento de Postagens">

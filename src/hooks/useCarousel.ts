@@ -1,8 +1,14 @@
 import { useState, useRef, useCallback } from "react";
-import type { ViewToken, FlatList as FlatListType } from "react-native";
+import type {
+  ViewToken,
+  FlatList as FlatListType,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import Toast from "react-native-toast-message";
+import { SLIDE_WIDTH } from "@/constants/slide-width";
 
 interface UseCarouselProps {
   links: {
@@ -64,6 +70,14 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
     }
   }, [currentIndex]);
 
+  const onMomentumScrollEnd = (
+    event: NativeSyntheticEvent<NativeScrollEvent>,
+  ) => {
+    const contentOffsetX = event.nativeEvent.contentOffset.x;
+    const newIndex = Math.round(contentOffsetX / SLIDE_WIDTH);
+    setCurrentIndex(newIndex);
+  };
+
   return {
     isDownloading,
     downloadLink,
@@ -72,5 +86,6 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
     handlePrev,
     flatListRef,
     currentIndex,
+    onMomentumScrollEnd,
   };
 };

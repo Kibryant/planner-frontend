@@ -1,4 +1,6 @@
 import { View } from "react-native";
+import Animated from "react-native-reanimated";
+import { useCarouselDots } from "@/hooks/useCarouselDots";
 
 interface CarouselDotsProps {
   total: number;
@@ -6,14 +8,14 @@ interface CarouselDotsProps {
 }
 
 export function CarouselDots({ total, currentIndex }: CarouselDotsProps) {
+  const { animatedStyles } = useCarouselDots({ total, currentIndex });
+
   return (
     <View className="flex-row items-center gap-x-2 justify-center my-3">
       {Array.from({ length: total }).map((_, index) => (
-        <View
+        <Animated.View
           key={`dot-${index + 1}`}
-          className={`h-1 rounded-full ${
-            currentIndex === index ? "w-2.5 bg-primary" : "w-1.5 bg-zinc-100"
-          }`}
+          style={[animatedStyles[index], { height: 4, borderRadius: 4 }]}
         />
       ))}
     </View>
