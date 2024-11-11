@@ -23,9 +23,9 @@ const screenHeight = Dimensions.get("screen").height;
 export default function Share() {
   const { index } = useLocalSearchParams();
 
-  const myIndex = Array.isArray(index) ? index[0] : index;
+  const indexString = Array.isArray(index) ? index[0] : index;
 
-  const indexNumber = Number.parseInt(myIndex, 10);
+  const indexNumber = Number.parseInt(indexString, 10);
 
   const {
     isVideoReady,
@@ -35,7 +35,7 @@ export default function Share() {
     setIsStepByStepVideoReady,
     onFullScreenChange,
     downloadLinks,
-  } = useShare({ index: myIndex });
+  } = useShare({ index: indexString });
 
   const tip: Tip = TIPS[indexNumber];
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { CardHabit, type HabitType } from "@/components/card-habit";
+import { CardHabit } from "@/components/card-habit";
+import type { HabitType } from "@/types/habit-type";
 
 interface HabitListProps {
   selectedHabit: HabitType;
