@@ -34,7 +34,7 @@ export const useCardHabit = (imagesLength: number) => {
   };
 
   const viewabilityConfig = {
-    viewAreaCoveragePercentThreshold: 99,
+    viewAreaCoveragePercentThreshold: 99.5,
   };
 
   return {

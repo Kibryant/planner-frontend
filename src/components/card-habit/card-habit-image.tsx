@@ -14,7 +14,7 @@ interface CarouselImageProps {
 export function CardHabitImage({ source }: CarouselImageProps) {
   return (
     <View style={styles.imageContainer}>
-      <Image source={source} style={styles.image} />
+      <Image source={source} style={styles.image} resizeMode="contain" />
       <LinearGradient
         colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
         start={{ x: 0, y: 0 }}
