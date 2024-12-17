@@ -68,6 +68,13 @@ export default function Layout() {
           headerShown: false,
         }}
       />
+
+      <Stack.Screen
+        name="tutorial/index"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

@@ -1,6 +1,5 @@
 import { View, Text } from "react-native";
 import { Card } from "@/components/card";
-import { MainCard } from "@/components/main-card";
 import { FireIcon } from "@/components/icons/fire-icon";
 import { CalendarIcon } from "@/components/icons/calendar-icon";
 import { StarIcon } from "@/components/icons/star-icon";
@@ -9,6 +8,7 @@ import { useAdminStore } from "@/store/admin-store";
 import { MoneyIcon } from "@/components/icons/money-icon";
 import { BottomButton } from "@/components/bottom-button";
 import { BackAdmin } from "@/components/back-admin";
+import { InterrogationIcon } from "@/components/icons/interrogation-icon";
 
 export default function Home() {
   const admin = useAdminStore((state) => state.admin);
@@ -23,11 +23,19 @@ export default function Home() {
       </View>
 
       <View className="flex-1 justify-center items-center">
-        <MainCard
-          href="/shares-to-sell"
-          text="Ações mensais para aumentar o faturamento"
-          IconHeader={MoneyIcon}
-        />
+        <View className="flex-row justify-between w-full max-w-md mb-2">
+          <Card
+            href="/shares-to-sell"
+            text="Ações mensais para aumentar o faturamento"
+            IconHeader={MoneyIcon}
+          />
+
+          <Card
+            href="/tutorial"
+            text="Como usar o app"
+            IconHeader={InterrogationIcon}
+          />
+        </View>
 
         <View className="flex-row justify-between w-full max-w-md">
           <Card
