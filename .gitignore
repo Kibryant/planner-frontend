@@ -24,3 +24,5 @@ expo-env.d.ts
 
 # env
 .env
+
+google-services.json
