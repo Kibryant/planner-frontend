@@ -16,7 +16,7 @@ export const habitImages: Record<HabitType, ImageSourcePropType[]> = {
   ],
   Mensal: [
     require("@/assets/images/bancada-3.jpg"),
-    require("@/assets/images/team.png"),
+    require("@/assets/images/team2.png"),
     require("@/assets/images/action2.png"),
     require("@/assets/images/goal.jpg"),
     require("@/assets/images/action.png"),
