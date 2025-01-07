@@ -11,6 +11,15 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { Platform } from "react-native";
+import * as NavigationBar from "expo-navigation-bar";
+
+const hideNavigationBar = async () => {
+  if (Platform.OS === "android") {
+    NavigationBar.setVisibilityAsync("hidden");
+  }
+};
+
+hideNavigationBar();
 
 SplashScreen.preventAutoHideAsync();
 

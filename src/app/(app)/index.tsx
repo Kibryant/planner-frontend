@@ -8,14 +8,19 @@ import { useAdminStore } from "@/store/admin-store";
 import { MoneyIcon } from "@/components/icons/money-icon";
 import { BottomButton } from "@/components/bottom-button";
 import { BackAdmin } from "@/components/back-admin";
-import { InterrogationIcon } from "@/components/icons/interrogation-icon";
+import { MainCard } from "@/components/main-card";
+import { MiniCard } from "@/components/mini-card";
+import { Logout } from "@/components/icons/logout";
+import { useUserStore } from "@/store/user-store";
+import { Question } from "@/components/icons/question";
 
 export default function Home() {
   const admin = useAdminStore((state) => state.admin);
+  const logout = useUserStore((state) => state.logout);
 
   return (
-    <View className="flex-1 px-8 bg-zinc-950">
-      <View className="flex-row items-center max-w-72 mt-10">
+    <View className="flex-1 px-6 bg-zinc-950">
+      <View className="flex-row items-center max-w-72">
         <View className="bg-primary h-10 w-[2px] mr-3 rounded-full" />
         <Text className="text-zinc-100 text-[25px] font-zona-bold">
           Menu Principal
@@ -23,21 +28,13 @@ export default function Home() {
       </View>
 
       <View className="flex-1 justify-center items-center">
-        <View className="flex-row justify-between w-full max-w-md mb-2">
-          <Card
-            href="/shares-to-sell"
-            text="Ações mensais para aumentar o faturamento"
-            IconHeader={MoneyIcon}
-          />
+        <MainCard
+          href="/shares-to-sell"
+          text="Ações mensais para aumentar o faturamento"
+          IconHeader={MoneyIcon}
+        />
 
-          <Card
-            href="/tutorial"
-            text="Como usar o app"
-            IconHeader={InterrogationIcon}
-          />
-        </View>
-
-        <View className="flex-row justify-between w-full max-w-md">
+        <View className="flex-row gap-2 w-full mt-2 max-w-md justify-center">
           <Card
             href="/post-planning"
             text="Planejamento das postagens"
@@ -50,7 +47,7 @@ export default function Home() {
           />
         </View>
 
-        <View className="flex-row justify-between w-full mt-2 max-w-md">
+        <View className="flex-row gap-2 w-full mt-2 max-w-md justify-center">
           <Card
             href="/success-habits"
             text="Hábitos de sucesso"
@@ -61,6 +58,12 @@ export default function Home() {
             text="Dicas de crescimento"
             IconHeader={RocketIcon}
           />
+        </View>
+
+        <View className="flex-row gap-2 w-full mt-2 max-w-md justify-center">
+          <MiniCard text="Sair da conta" IconHeader={Logout} action={logout} />
+
+          <MiniCard href="/tutorial" text="Como usar" IconHeader={Question} />
         </View>
       </View>
 

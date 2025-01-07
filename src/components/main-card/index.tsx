@@ -21,7 +21,6 @@ export function MainCard({ href, IconHeader, text }: MainCardProps) {
         padding: 1,
         borderRadius: 12,
         height: 160,
-        marginBottom: 8,
       }}
     >
       <Link href={href} asChild>
