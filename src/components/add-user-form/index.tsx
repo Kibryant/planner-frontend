@@ -14,6 +14,7 @@ import { DatePickerModal } from "../date-picker-modal";
 import type { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { ConfirmationModal } from "../confirmation-modal";
 import { DatePickerButton } from "../date-picker-button";
+import { AxiosError } from "axios";
 
 export function AddUserForm() {
   const token = useAdminStore((state) => state.admin?.token);
@@ -68,12 +69,30 @@ export function AddUserForm() {
         queryKey: ["get-users"],
       });
     },
-    onError: () => {
-      Toast.show({
-        type: "error",
-        text1: "Erro ao adicionar usuário",
-        text2: "Tente novamente",
-      });
+    onError: (error) => {
+      if (error instanceof AxiosError && error.response) {
+        const { status } = error.response;
+
+        if (status === 409) {
+          Toast.show({
+            type: "error",
+            text1: "Erro ao adicionar usuário",
+            text2: "Este usuário já está cadastrado.",
+          });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Erro ao adicionar usuário",
+            text2: "Ocorreu um erro. Tente novamente.",
+          });
+        }
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao adicionar usuário",
+          text2: "Ocorreu um erro inesperado. Verifique sua conexão.",
+        });
+      }
     },
   });
 

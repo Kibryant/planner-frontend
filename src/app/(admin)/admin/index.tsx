@@ -28,7 +28,7 @@ export default function Index() {
           href="/admin/users"
         />
 
-        <View className="flex-row justify-between w-full max-w-md mb-2">
+        <View className="flex-row justify-between w-full max-w-md my-2">
           <Card text="Acessar o aplicativo" IconHeader={PlayIcon} href="/" />
 
           <Card
