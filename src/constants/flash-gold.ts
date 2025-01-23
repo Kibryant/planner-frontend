@@ -2,7 +2,7 @@ export const flashGold = {
   title: "Flash Gold",
   thumbnail: "https://img.youtube.com/vi/vSc2J3MGuLk/hqdefault.jpg",
   videoId: "vSc2J3MGuLk",
-  stepByStepVideoId: "6GVqB-ex8qM",
+  stepByStepVideoId: "CGrDEJaR48o",
   links: [
     {
       name: "flash-gold-1.jpg",

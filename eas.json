@@ -1,7 +1,7 @@
 {
   "cli": {
     "version": ">= 10.1.1",
-    "appVersionSource": "local"
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -17,14 +17,12 @@
       "android": {
         "env": {
           "PLATFORM": "android"
-        },
-        "autoIncrement": "version"
+        }
       },
       "ios": {
         "env": {
           "PLATFORM": "ios"
-        },
-        "autoIncrement": "version"
+        }
       }
     }
   },
