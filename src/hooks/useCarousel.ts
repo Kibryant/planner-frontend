@@ -24,8 +24,12 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
 
   const downloadLink = useCallback(() => {
     const { url, name } = links[currentIndex];
+
+    const fileSystem = FileSystem.documentDirectory
+    
     setIsDownloading(true);
-    FileSystem.downloadAsync(url, FileSystem.documentDirectory + name)
+    
+    FileSystem.downloadAsync(url, fileSystem + name)
       .then(({ uri }) => {
         MediaLibrary.saveToLibraryAsync(uri).then(() => {
           Toast.show({
@@ -35,7 +39,9 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
           });
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error)
+
         Toast.show({
           type: "error",
           text1: "Erro ao baixar",

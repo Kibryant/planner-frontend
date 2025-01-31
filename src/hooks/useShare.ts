@@ -26,7 +26,7 @@ export const useShare = ({ index }: UseShareProps) => {
     }
   }, []);
 
-  const saveToGallery = async (fileUrl: string) => {
+  const saveToGallery = async (fileUrl: string, fileName: string) => {
     const { status } = await MediaLibrary.requestPermissionsAsync();
 
     if (status === "granted") {
@@ -39,11 +39,11 @@ export const useShare = ({ index }: UseShareProps) => {
           throw new Error("Document directory is not available");
         }
 
-        const fileUri = documentDirectory + fileUrl.split("/").pop();
+        const fileUri = documentDirectory + fileName;
 
         const downloadResult = await FileSystem.downloadAsync(fileUrl, fileUri);
 
-        await MediaLibrary.createAssetAsync(downloadResult.uri);
+        await MediaLibrary.saveToLibraryAsync(downloadResult.uri);
 
         Toast.show({
           type: "success",
@@ -73,7 +73,7 @@ export const useShare = ({ index }: UseShareProps) => {
 
     for (const link of links) {
       try {
-        await saveToGallery(link.url);
+        await saveToGallery(link.url, link.name);
       } catch {
         Toast.show({
           type: "error",
