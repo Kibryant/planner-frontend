@@ -8,8 +8,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getWeeklyProgess } from "@/functions/get-weekly-progess";
 import { useAdminStore } from "@/store/admin-store";
 import { Layout } from "@/components/layout";
+import { useTranslation } from "react-i18next";
 
 export default function PostPlanning() {
+    const { t } = useTranslation();
   const { user, token } = useUserStore();
   const admin = useAdminStore((state) => state.admin);
 
@@ -57,7 +59,7 @@ export default function PostPlanning() {
             accessibilityLabel="Imagem de um penteado de cabelo."
           />
           <Text className="text-zinc-100 max-w-52 font-zona-semibold">
-            Especialistas que planejam têm 78% mais chances de crescer
+            {t("Especialistas que planejam têm 78% mais chances de crescer")}
           </Text>
         </View>
       </View>

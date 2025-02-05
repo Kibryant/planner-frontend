@@ -16,6 +16,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HttpStatusCode } from "axios";
 import { api } from "@/lib/api";
 import type { MONTHS } from "@/constants/months";
+import { useTranslation } from "react-i18next";
 
 interface ActionsProps {
   MONTH: (typeof MONTHS)[keyof typeof MONTHS];
@@ -34,6 +35,7 @@ export function Actions({
   token,
   actions,
 }: ActionsProps) {
+    const { t } = useTranslation();	
   const queryClient = useQueryClient();
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -143,7 +145,7 @@ export function Actions({
     <>
       <View className="justify-center items-center mb-2">
         <Text className="text-zinc-100 text-center font-zona-bold">
-          Defina 4 ações que você fará para atingir a sua meta de faturamento
+          {t("Defina 4 ações que você fará para atingir a sua meta de faturamento")}
         </Text>
 
         <Animated.View style={{ transform: [{ translateY: bounceValue }] }}>
@@ -158,16 +160,17 @@ export function Actions({
           onPress={() => handleAction(index)}
         >
           <Text
-            numberOfLines={1} // Limita o texto a uma linha
-            ellipsizeMode="tail" // Aplica o "..." no final do texto quando ultrapassa o limite
+            numberOfLines={1}
+            ellipsizeMode="tail"
             className={`text-center font-zona-regular text-xs ${
               action ? "text-zinc-100" : "text-[#920036]"
             }`}
           >
-            {action ? action : `Ação ${index + 1}`}
+            {action ? action : `${t("Ação")} ${index + 1}`}
           </Text>
         </Pressable>
       ))}
+      
       <Modal
         transparent={true}
         visible={modalVisible}
@@ -194,12 +197,12 @@ export function Actions({
               </TouchableOpacity>
 
               <Text className="text-zinc-100 text-center font-zona-bold text-lg">
-                {`Ação ${actionIndex !== null ? actionIndex + 1 : ""}`}
+                {`${t("Ação")} ${actionIndex !== null ? actionIndex + 1 : ""}`}
               </Text>
 
               <TextInput
                 className="bg-[#47001B] rounded-lg w-full px-8 py-3 mt-4 min-w-80 text-zinc-100"
-                placeholder="Digite sua ação"
+                placeholder={t("Descreva a ação")}
                 placeholderTextColor="#DD0354"
                 maxLength={200}
                 value={actionText}

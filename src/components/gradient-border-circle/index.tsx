@@ -9,6 +9,7 @@ import { RocketIconTurned } from "../icons/rocket-icon-turned";
 import { HelmetIconTurned } from "../icons/helmet-icon-turned";
 import { StarIconTurned } from "../icons/star-icon-turned";
 import { CalendarIconTurned } from "../icons/calendar-icon-turned";
+import { useTranslation } from "react-i18next";
 
 interface GradientBorderCircleProps {
   day: string;
@@ -29,6 +30,7 @@ const getIconForDay = (day: string) => {
 };
 
 export function GradientBorderCircle({ day }: GradientBorderCircleProps) {
+    const { t } = useTranslation();
   const Icon = getIconForDay(day);
 
   return (
@@ -59,7 +61,7 @@ export function GradientBorderCircle({ day }: GradientBorderCircleProps) {
           className="bg-[#4F001DE0] flex-1 rounded-full flex items-center justify-center"
           activeOpacity={0.8}
         >
-          <Text className="text-zinc-100 text-base font-zona-bold">{day}</Text>
+          <Text className="text-zinc-100 text-base font-zona-bold">{t(day)}</Text>
         </TouchableOpacity>
       </Link>
     </LinearGradient>

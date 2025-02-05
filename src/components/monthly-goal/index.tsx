@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HttpStatusCode } from "axios";
 import { api } from "@/lib/api";
 import Toast from "react-native-toast-message";
+import { useTranslation } from "react-i18next";
 
 interface MonthlyGoalProps {
   MONTH: (typeof MONTHS)[keyof typeof MONTHS];
@@ -25,6 +26,8 @@ export function MonthlyGoal({
   token,
   userId,
 }: MonthlyGoalProps) {
+    const { t } = useTranslation();
+
   const queryClient = useQueryClient();
 
   const [monthlyGoalText, setMonthlyGoalText] = useState("");
@@ -36,7 +39,7 @@ export function MonthlyGoal({
           style: "currency",
           currency: "BRL",
         })} Por mês`
-      : `Clique para adicionar a Meta do mês de ${monthBr}`;
+      : "Clique para adicionar a meta do mês";
 
   const openModal = () => {
     setModalVisible(true);
@@ -126,7 +129,7 @@ export function MonthlyGoal({
           <Text
             className={`font-zona-bold text-[10px] text-center ${monthlyGoal.length > 0 ? "text-zinc-100" : "text-[#920036]"}`}
           >
-            {monthlyGoalFormatted}
+            {t(monthlyGoalFormatted)}
           </Text>
         </TouchableOpacity>
       </LinearGradient>
@@ -162,12 +165,12 @@ export function MonthlyGoal({
                       style: "currency",
                       currency: "BRL",
                     })
-                  : `Meta do mês de ${monthBr}`}
+                  : t("Adicione sua meta mensal")}
               </Text>
 
               <TextInput
                 className="bg-[#47001B] rounded-lg w-full px-8 py-3 mt-4 min-w-80 text-zinc-100"
-                placeholder="Digite sua meta mensal"
+                placeholder={t("Digite sua meta mensal")}
                 placeholderTextColor="#DD0354"
                 keyboardType="numeric"
                 onChangeText={setMonthlyGoalText}

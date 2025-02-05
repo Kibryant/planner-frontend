@@ -1,5 +1,6 @@
 import { type Href, Link } from "expo-router";
 import type { ElementType } from "react";
+import { useTranslation } from "react-i18next";
 import { TouchableOpacity, View, Text } from "react-native";
 
 interface CardProps {
@@ -9,6 +10,7 @@ interface CardProps {
 }
 
 export function Card({ href, text, IconHeader }: CardProps) {
+    const { t } = useTranslation();
   return (
     <Link href={href} asChild>
       <TouchableOpacity
@@ -22,7 +24,7 @@ export function Card({ href, text, IconHeader }: CardProps) {
         </View>
         <View className="flex-1 max-w-32 flex-row justify-start items-center gap-x-2 mt-10">
           <Text className="text-zinc-100 font-zona-semibold text-left text-[14px] ">
-            {text}
+            {t(text)}
           </Text>
         </View>
       </TouchableOpacity>

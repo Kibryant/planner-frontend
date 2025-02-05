@@ -3,13 +3,14 @@ import { Back } from "@/components/back";
 import { BottomButton } from "@/components/bottom-button";
 import { Title } from "@/components/title";
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 interface LayoutProps {
   children: ReactNode;
   title: string;
 }
 
-export function Layout({ children, title }: LayoutProps) {
+export function Layout({ children, title }: LayoutProps) {    
   return (
     <View className="flex-1 bg-zinc-950">
       <View className="flex-1 px-6">

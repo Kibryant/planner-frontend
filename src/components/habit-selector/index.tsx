@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import type { HabitType } from "../card-habit";
+import type { HabitType } from "@/types/habit-type";
+import { useTranslation } from "react-i18next";
 
 interface HabitSelectorProps {
   selectedHabit: string;
@@ -13,6 +14,7 @@ export function HabitSelector({
   selectedHabit,
   onSelectHabit,
 }: HabitSelectorProps) {
+    const { t } = useTranslation();
   return (
     <View className="flex-row justify-center mt-10">
       <View className="flex-row justify-between items-center w-[300px] mt-5 bg-[#FF005E4F] rounded-full px-2 py-1.5">
@@ -25,7 +27,7 @@ export function HabitSelector({
             onPress={() => onSelectHabit(habit)}
           >
             <Text className="text-zinc-100 font-zona-semibold text-center">
-              {habit}
+              {t(habit)}
             </Text>
           </TouchableOpacity>
         ))}

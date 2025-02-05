@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { View, Text, ScrollView, TouchableOpacity, Modal } from "react-native";
 
 interface MonthModalProps {
@@ -41,6 +42,7 @@ export function MonthModal({
   onSelectMonth,
   months,
 }: MonthModalProps) {
+    const { t } = useTranslation();	
   return (
     <Modal
       transparent={true}
@@ -51,7 +53,7 @@ export function MonthModal({
       <View className="flex-1 justify-center items-center bg-black/80">
         <View className="bg-[#4F001D] rounded-2xl p-6 w-4/5">
           <Text className="text-zinc-100 text-lg font-zona-semibold mb-4">
-            Selecione o Mês
+            {t("Selecione o mês")}
           </Text>
 
           <ScrollView>
@@ -62,7 +64,7 @@ export function MonthModal({
                 onPress={() => onSelectMonth(month)}
               >
                 <Text className="text-zinc-100 text-lg capitalize font-zona-regular">
-                  {month}
+                  {t(month)}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -73,7 +75,7 @@ export function MonthModal({
             onPress={() => setModalVisible(false)}
           >
             <Text className="text-zinc-100 text-center font-zona-regular">
-              Fechar
+              {t("Fechar")}
             </Text>
           </TouchableOpacity>
         </View>

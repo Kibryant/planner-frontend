@@ -1,5 +1,6 @@
 import { type Href, Link } from "expo-router";
 import type { ElementType } from "react";
+import { useTranslation } from "react-i18next";
 import { TouchableOpacity, View, Text } from "react-native";
 
 interface MiniCardProps {
@@ -10,6 +11,8 @@ interface MiniCardProps {
 }
 
 export function MiniCard({ href, text, IconHeader, action }: MiniCardProps) {
+    const { t } = useTranslation();
+
   if (action) {
     return (
       <TouchableOpacity
@@ -25,7 +28,7 @@ export function MiniCard({ href, text, IconHeader, action }: MiniCardProps) {
 
         <View className="flex-1 max-w-32 flex-row justify-start items-center">
           <Text className="text-zinc-100 font-zona-semibold text-left text-[14px] ">
-            {text}
+            {t(text)}
           </Text>
         </View>
       </TouchableOpacity>
@@ -46,7 +49,7 @@ export function MiniCard({ href, text, IconHeader, action }: MiniCardProps) {
 
         <View className="flex-1 max-w-32 flex-row justify-start items-center">
           <Text className="text-zinc-100 font-zona-semibold text-left text-[14px] ">
-            {text}
+            {t(text)}
           </Text>
         </View>
       </TouchableOpacity>

@@ -13,8 +13,10 @@ import { MiniCard } from "@/components/mini-card";
 import { Logout } from "@/components/icons/logout";
 import { useUserStore } from "@/store/user-store";
 import { Question } from "@/components/icons/question";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
+    const { t } = useTranslation();
   const admin = useAdminStore((state) => state.admin);
   const logout = useUserStore((state) => state.logout);
 
@@ -23,7 +25,7 @@ export default function Home() {
       <View className="flex-row items-center max-w-72">
         <View className="bg-primary h-10 w-[2px] mr-3 rounded-full" />
         <Text className="text-zinc-100 text-[25px] font-zona-bold">
-          Menu Principal
+          {t("Menu principal")}
         </Text>
       </View>
 
@@ -37,7 +39,7 @@ export default function Home() {
         <View className="flex-row gap-2 w-full mt-2 max-w-md justify-center">
           <Card
             href="/post-planning"
-            text="Planejamento das postagens"
+            text="Planejamento de Postagens"
             IconHeader={CalendarIcon}
           />
           <Card

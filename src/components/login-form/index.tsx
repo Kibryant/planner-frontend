@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import { Controller } from "react-hook-form";
 import { useLogin } from "@/hooks/useLogin";
@@ -71,20 +72,24 @@ export function LoginForm() {
         )}
       </View>
 
-      <TouchableOpacity
-        className={`w-full h-12 rounded-lg justify-center items-center ${mutation.isPending ? "bg-gray-400" : "bg-primary"
-          }`}
-        accessibilityRole="button"
-        accessibilityLabel="Botão de acessar"
-        accessibilityHint="Clique para fazer login"
-        activeOpacity={0.8}
-        onPress={handleSubmit(handleLogin)}
-        disabled={mutation.isPending}
-      >
-        <Text className="text-center text-white font-zona-bold">
-            {t("Acessar")}
-        </Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            className={`w-full h-12 rounded-lg justify-center items-center ${mutation.isPending ? "bg-primary/80" : "bg-primary"
+              }`}
+            accessibilityRole="button"
+            accessibilityLabel="Botão de acessar"
+            accessibilityHint="Clique para fazer login"
+            activeOpacity={0.8}
+            onPress={handleSubmit(handleLogin)}
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? (
+              <ActivityIndicator size="small" color="#ffffff" />
+            ) : (
+              <Text className="text-center text-white font-zona-bold">
+                {t("Acessar")}
+              </Text>
+            )}
+          </TouchableOpacity>
     </>
   );
 }

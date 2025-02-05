@@ -37,7 +37,8 @@ export const useUserStore = create<UserState>()(
           if (response.user) {
             set({ user: response.user, token: response.token });
           }
-        } catch {
+          
+        } catch(error) {
           throw new Error("Credenciais inválidas");
         }
       },

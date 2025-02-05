@@ -2,6 +2,7 @@ import React, { type ElementType } from "react";
 import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { type Href, Link } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("window");
 
@@ -12,6 +13,8 @@ interface MainCardProps {
 }
 
 export function MainCard({ href, IconHeader, text }: MainCardProps) {
+    const { t } = useTranslation();
+
   return (
     <LinearGradient
       colors={["#EF0052", "#4E001D"]}
@@ -39,7 +42,7 @@ export function MainCard({ href, IconHeader, text }: MainCardProps) {
               className="text-zinc-100 font-zona-semibold text-left max-w-72"
               style={{ fontSize: width * 0.045 }}
             >
-              {text}
+              {t(text)}
             </Text>
           </View>
         </TouchableOpacity>

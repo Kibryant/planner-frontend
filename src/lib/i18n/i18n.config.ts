@@ -19,7 +19,7 @@ i18next.use(initReactI18next).init({
   compatibilityJSON: "v4",
   debug: process.env.NODE_ENV === "development",
   lng: deviceLanguage || "pt",
-  fallbackLng: deviceLanguage || "pt",
+  fallbackLng: "pt",
   interpolation: {
     escapeValue: false,
   },

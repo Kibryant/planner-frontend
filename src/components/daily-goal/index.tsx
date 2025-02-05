@@ -7,6 +7,7 @@ import Toast from "react-native-toast-message";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HttpStatusCode } from "axios";
 import { api } from "@/lib/api";
+import { useTranslation } from "react-i18next";
 
 interface DailyGoalProps {
   MONTH: (typeof MONTHS)[keyof typeof MONTHS];
@@ -25,6 +26,8 @@ export function DailyGoal({
   userId,
   dailyGoal,
 }: DailyGoalProps) {
+    const { t } = useTranslation();
+
   const queryClient = useQueryClient();
 
   const [dailyGoalText, setDailyGoalText] = useState("");
@@ -104,7 +107,7 @@ export function DailyGoal({
         style: "currency",
         currency: "BRL",
       })} Por dia`
-    : "Clique aqui para adicionar sua meta diária";
+    : "Clique para adicionar a sua meta diária";
 
   return (
     <>
@@ -126,7 +129,7 @@ export function DailyGoal({
           <Text
             className={`font-zona-bold text-[10px] text-center ${dailyGoal.length > 0 ? "text-zinc-100" : "text-[#920036]"}`}
           >
-            {dailyGoalFormated}
+            {t(dailyGoalFormated)}
           </Text>
         </TouchableOpacity>
       </LinearGradient>
@@ -158,13 +161,13 @@ export function DailyGoal({
 
               <Text className="text-zinc-100 text-center font-zona-semibold text-xl">
                 {dailyGoal.length > 0
-                  ? "Edite sua meta diária"
-                  : "Adicione sua meta diária"}
+                  ? t("Edite sua meta diária")
+                  : t("Adicione sua meta diária")}
               </Text>
 
               <TextInput
                 className="bg-[#47001B] rounded-lg w-full px-8 py-3 mt-4 min-w-80 text-zinc-100 text-center"
-                placeholder="Digite sua meta diária"
+                placeholder={t("Digite sua meta diária")}
                 placeholderTextColor="#DD0354"
                 value={dailyGoalText}
                 onChangeText={setDailyGoalText}

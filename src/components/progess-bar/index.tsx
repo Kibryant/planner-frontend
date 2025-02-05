@@ -1,4 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
+import { useTranslation } from "react-i18next";
 import { View, Text } from "react-native";
 
 interface ProgessBarProps {
@@ -6,6 +7,8 @@ interface ProgessBarProps {
 }
 
 export function ProgessBar({ value }: ProgessBarProps) {
+    const { t } = useTranslation();
+
   return (
     <LinearGradient
       colors={["#EF0052", "#4E001D"]}
@@ -20,7 +23,7 @@ export function ProgessBar({ value }: ProgessBarProps) {
     >
       <View className="flex-1 items-center justify-center rounded-full bg-[#46001A] p-4">
         <Text className="text-zinc-100 font-zona-semibold mb-2 text-sm">
-          Progresso da semana
+          {t("Progresso da semana")}
         </Text>
         <View className="w-[136px] flex-row items-center justify-between">
           <View className="h-2.5 bg-[#3C0016] rounded-full w-full flex-row items-center justify-between">
