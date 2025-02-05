@@ -42,7 +42,8 @@
           "savePhotosPermission": "Você precisa permitir o acesso às fotos para poder adicionar imagens ao seu plano de estudos.",
           "isAccessMediaLocationEnabled": true
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true

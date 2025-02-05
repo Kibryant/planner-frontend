@@ -1,3 +1,4 @@
+import LanguageSelector from "@/components/language-selector";
 import { logo } from "@/constants/logo";
 import { useLoginAdmin } from "@/hooks/useLoginAdmin";
 import { useAdminStore } from "@/store/admin-store";
@@ -40,6 +41,7 @@ export default function Index() {
           className="flex-1 bg-zinc-950 justify-center items-center px-8"
           style={{ paddingHorizontal: width * 0.05 }}
         >
+            <LanguageSelector />
           <View className="mb-12" style={{ marginBottom: height * 0.05 }}>
             <Image
               source={logo}

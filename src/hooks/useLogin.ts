@@ -8,8 +8,11 @@ import { useMutation } from "@tanstack/react-query";
 import Toast from "react-native-toast-message";
 import { useUserStore } from "@/store/user-store";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 export const useLogin = () => {
+    const { t } = useTranslation();
+
   const {
     control,
     handleSubmit,
@@ -29,8 +32,8 @@ export const useLogin = () => {
     onError: (error) => {
       Toast.show({
         type: "error",
-        text1: "Erro ao fazer login",
-        text2: error.message,
+        text1: t("Erro ao fazer login"),
+        text2: t(error.message),
       });
     },
   });
@@ -40,6 +43,7 @@ export const useLogin = () => {
   };
 
   return {
+    t,
     control,
     handleSubmit,
     errors,

@@ -1,11 +1,12 @@
+import "@/lib/i18n/i18n.config";
+import "./global.css";
+
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import Toast from "react-native-toast-message";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-import "./global.css";
 import {
   SafeAreaView,
   useSafeAreaInsets,

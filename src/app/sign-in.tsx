@@ -15,12 +15,16 @@ import { useUserStore } from "@/store/user-store";
 import { useAdminStore } from "@/store/admin-store";
 import { LoginForm } from "@/components/login-form";
 import { logo } from "@/constants/logo";
+import LanguageSelector from "@/components/language-selector";
+import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("window");
 
 export default function Index() {
   const user = useUserStore((state) => state.user);
   const admin = useAdminStore((state) => state.admin);
+
+  const { t } = useTranslation();
 
   if (admin) {
     return <Redirect href="/admin" />;
@@ -37,6 +41,7 @@ export default function Index() {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View className="flex-1 bg-zinc-950 justify-center items-center px-8">
+        <LanguageSelector />
           <View className="mb-12">
             <Image
               source={logo}
@@ -50,10 +55,10 @@ export default function Index() {
             className="text-white text-2xl font-zona-bold mb-2"
             style={{ fontSize: width * 0.06 }}
           >
-            Boas vindas!
+            {t("Boas vindas")}!
           </Text>
           <Text className="text-gray-400 mb-6 text-lg font-zona-regular text-center">
-            Faca seu login para acessar o planner
+            {t("Faça seu login para acessar o planner")}
           </Text>
 
           <LoginForm />
@@ -70,7 +75,7 @@ export default function Index() {
                 className="text-gray-400 text-sm font-zona-regular"
                 style={{ fontSize: width * 0.035 }}
               >
-                Acesse como administrador
+                {t("Acesse como administrador")}
               </Text>
             </TouchableOpacity>
           </Link>

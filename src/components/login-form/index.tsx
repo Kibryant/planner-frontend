@@ -12,7 +12,7 @@ import { useLogin } from "@/hooks/useLogin";
 const { width } = Dimensions.get("window");
 
 export function LoginForm() {
-  const { control, errors, handleSubmit, handleLogin, mutation } = useLogin();
+  const { t, control, errors, handleSubmit, handleLogin, mutation } = useLogin();
 
   return (
     <>
@@ -21,7 +21,7 @@ export function LoginForm() {
           control={control}
           render={({ field: { onChange, onBlur } }) => (
             <TextInput
-              placeholder="Email"
+              placeholder={t("Email")}
               placeholderTextColor="#ccc"
               className="w-full h-12 bg-zinc-800 text-zinc-100 rounded-lg px-4"
               accessibilityLabel="Campo de email"
@@ -34,12 +34,12 @@ export function LoginForm() {
           )}
           name="email"
         />
-        {errors.email && (
+        {errors.email?.message && (
           <Text
             className="text-red-500 text-sm"
             style={{ fontSize: width * 0.035 }}
           >
-            {errors.email.message}
+            {t(errors.email.message)}
           </Text>
         )}
       </View>
@@ -49,7 +49,7 @@ export function LoginForm() {
           control={control}
           render={({ field: { onChange, onBlur } }) => (
             <TextInput
-              placeholder="Senha"
+              placeholder={t("Senha")}
               placeholderTextColor="#ccc"
               className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4"
               accessibilityLabel="Campo de senha"
@@ -61,20 +61,18 @@ export function LoginForm() {
           )}
           name="password"
         />
-        {errors.password && (
+        {errors.password?.message && (
           <Text
             className="text-red-500 text-sm"
             style={{ fontSize: width * 0.035 }}
           >
-            {errors.password.message}
+            {t(errors.password.message)}
           </Text>
         )}
       </View>
 
       <TouchableOpacity
-        // eslint-disable-next-line prettier/prettier
         className={`w-full h-12 rounded-lg justify-center items-center ${mutation.isPending ? "bg-gray-400" : "bg-primary"
-          // eslint-disable-next-line prettier/prettier
           }`}
         accessibilityRole="button"
         accessibilityLabel="Botão de acessar"
@@ -83,7 +81,9 @@ export function LoginForm() {
         onPress={handleSubmit(handleLogin)}
         disabled={mutation.isPending}
       >
-        <Text className="text-center text-white font-zona-bold">Acessar</Text>
+        <Text className="text-center text-white font-zona-bold">
+            {t("Acessar")}
+        </Text>
       </TouchableOpacity>
     </>
   );
