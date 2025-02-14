@@ -2,7 +2,7 @@
   "expo": {
     "name": "Planner Mecha Turbo",
     "slug": "planner-frontend",
-    "version": "1.0.49",
+    "version": "1.0.50",
     "orientation": "portrait",
     "icon": "./public/icon.png",
     "scheme": "planner-mecha-turbo",
@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.planner.mecha.turbo.br"
+      "bundleIdentifier": "com.planner.mecha.turbo.br",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {

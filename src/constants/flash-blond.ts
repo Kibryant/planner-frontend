@@ -3,6 +3,7 @@ export const flashBlond = {
   thumbnail: "https://img.youtube.com/vi/H6WFsji_iJU/hqdefault.jpg",
   videoId: "H6WFsji_iJU",
   stepByStepVideoId: "6GVqB-ex8qM",
+  videoIdSpanish: "z7hR1bZBu94",
   links: [
     {
       name: "flash-blond-feed-1.png",

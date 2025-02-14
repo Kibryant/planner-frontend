@@ -99,5 +99,9 @@
     "Descreva a ação": "Describe la acción",
     "Diário": "Diario",
     "Semanal": "Semanal",
-    "Mensal": "Mensual"
+    "Mensal": "Mensual",
+    "Por mês": "Por mes",
+    "Por dia": "Por día",
+    "O e-mail é inválido": "El correo electrónico no es válido",
+    "A senha deve ter no mínimo 4 caracteres": "La contraseña debe tener al menos 4 caracteres"
 }

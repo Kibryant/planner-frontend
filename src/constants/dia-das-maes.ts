@@ -2,6 +2,7 @@ export const diaDasMaes = {
   title: "Dia das Mães",
   thumbnail: "https://img.youtube.com/vi/ST0NixsYs0U/hqdefault.jpg",
   videoId: "ST0NixsYs0U",
+  videoIdSpanish: "pue0gz4HkGk",
   links: [
     {
       name: "dia-das-maes-feed-1.png",

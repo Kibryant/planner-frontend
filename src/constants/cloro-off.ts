@@ -2,6 +2,7 @@ export const cloroOff = {
   title: "Cloro Off",
   thumbnail: "https://img.youtube.com/vi/ok3_m46EVBs/hqdefault.jpg",
   videoId: "ok3_m46EVBs",
+  videoIdSpanish: "8A-Be9ljxnQ",
   stepByStepVideoId: "okq_xb0ZUes",
   links: [
     {

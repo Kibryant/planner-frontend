@@ -8,7 +8,7 @@ export default function SuccessHabits() {
   const [selectedHabit, setSelectedHabit] = useState<HabitType>("Diário");
 
   return (
-    <Layout title="Hábitos de Sucesso">
+    <Layout title="Hábitos de sucesso">
       <HabitSelector
         selectedHabit={selectedHabit}
         onSelectHabit={setSelectedHabit}

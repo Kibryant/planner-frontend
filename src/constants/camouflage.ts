@@ -2,6 +2,7 @@ export const camouflage = {
   title: "Camuflagem",
   thumbnail: "https://img.youtube.com/vi/Q5SM_uyDYwI/hqdefault.jpg",
   videoId: "Q5SM_uyDYwI",
+  videoIdSpanish: "MApVXF9FgdY",
   stepByStepVideoId: "DTKb5wJSmyw",
   links: [
     {

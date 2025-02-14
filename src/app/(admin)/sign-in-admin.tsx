@@ -21,6 +21,8 @@ import {
 
 const { width, height } = Dimensions.get("window");
 
+const isTablet = width >= 768;
+
 export default function Index() {
   const admin = useAdminStore((state) => state.admin);
 
@@ -39,13 +41,19 @@ export default function Index() {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View
           className="flex-1 bg-zinc-950 justify-center items-center px-8"
-          style={{ paddingHorizontal: width * 0.05 }}
+          style={{ paddingHorizontal: isTablet ? width * 0.1 : width * 0.05 }}
         >
-            <LanguageSelector />
-          <View className="mb-12" style={{ marginBottom: height * 0.05 }}>
+          <LanguageSelector />
+          <View
+            className="mb-12"
+            style={{ marginBottom: isTablet ? height * 0.08 : height * 0.05 }}
+          >
             <Image
               source={logo}
-              style={{ width: width * 0.5, height: width * 0.5 }}
+              style={{
+                width: isTablet ? width * 0.4 : width * 0.5,
+                height: isTablet ? width * 0.4 : width * 0.5,
+              }}
               resizeMode="contain"
               accessibilityLabel="Logo da Mecha Turbo"
             />
@@ -53,22 +61,27 @@ export default function Index() {
 
           <Text
             className="text-zinc-100 text-2xl font-zona-bold mb-2"
-            style={{ fontSize: width * 0.06 }}
+            style={{ fontSize: isTablet ? width * 0.08 : width * 0.06 }}
           >
             Boas vindas!
           </Text>
           <Text
             className="text-zinc-400 mb-6 text-center"
-            style={{ fontSize: width * 0.04 }}
+            style={{ fontSize: isTablet ? width * 0.045 : width * 0.04 }}
           >
-            Faca seu login para acessar o painel administrativo
+            Faça seu login para acessar o painel administrativo
           </Text>
-          <View className="w-full mb-2">
+
+          <View className="w-full mb-4">
             <Controller
               control={control}
               render={({ field: { onChange, onBlur } }) => (
                 <TextInput
-                  className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4"
+                  className="w-full bg-zinc-800 text-white rounded-lg px-4"
+                  style={{
+                    height: isTablet ? 60 : 48,
+                    fontSize: isTablet ? width * 0.04 : width * 0.035,
+                  }}
                   placeholder="Código de acesso"
                   keyboardType="number-pad"
                   accessibilityLabel="Código de acesso"
@@ -80,18 +93,25 @@ export default function Index() {
               name="accessCode"
             />
             {errors.accessCode && (
-              <Text className="text-red-500 font-zona-regular text-sm mb-2">
+              <Text
+                className="text-red-500 font-zona-regular text-sm mb-2"
+                style={{ fontSize: isTablet ? width * 0.035 : width * 0.03 }}
+              >
                 {errors.accessCode.message}
               </Text>
             )}
           </View>
 
-          <View className="w-full mb-2">
+          <View className="w-full mb-4">
             <Controller
               control={control}
               render={({ field: { onChange, onBlur } }) => (
                 <TextInput
-                  className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4"
+                  className="w-full bg-zinc-800 text-white rounded-lg px-4"
+                  style={{
+                    height: isTablet ? 60 : 48,
+                    fontSize: isTablet ? width * 0.04 : width * 0.035,
+                  }}
                   placeholder="Email"
                   keyboardType="email-address"
                   accessibilityLabel="Email"
@@ -103,18 +123,25 @@ export default function Index() {
               name="email"
             />
             {errors.email && (
-              <Text className="text-red-500 font-zona-regular text-sm mb-2">
+              <Text
+                className="text-red-500 font-zona-regular text-sm mb-2"
+                style={{ fontSize: isTablet ? width * 0.035 : width * 0.03 }}
+              >
                 {errors.email.message}
               </Text>
             )}
           </View>
 
-          <View className="w-full mb-2">
+          <View className="w-full mb-4">
             <Controller
               control={control}
               render={({ field: { onChange, onBlur } }) => (
                 <TextInput
-                  className="w-full h-12 bg-zinc-800 text-white rounded-lg px-4"
+                  className="w-full bg-zinc-800 text-white rounded-lg px-4"
+                  style={{
+                    height: isTablet ? 60 : 48,
+                    fontSize: isTablet ? width * 0.04 : width * 0.035,
+                  }}
                   placeholder="Senha"
                   secureTextEntry
                   accessibilityLabel="Senha"
@@ -126,17 +153,22 @@ export default function Index() {
               name="password"
             />
             {errors.password && (
-              <Text className="text-red-500 font-zona-regular text-sm mb-2">
+              <Text
+                className="text-red-500 font-zona-regular text-sm mb-2"
+                style={{ fontSize: isTablet ? width * 0.035 : width * 0.03 }}
+              >
                 {errors.password.message}
               </Text>
             )}
           </View>
 
           <TouchableOpacity
-            // eslint-disable-next-line prettier/prettier
-            className={`w-full h-12 rounded-lg justify-center items-center ${mutation.isPending ? "bg-primary/80" : "bg-primary"
-              // eslint-disable-next-line prettier/prettier
-              }`}
+            className={`w-full rounded-lg justify-center items-center ${
+              mutation.isPending ? "bg-primary/80" : "bg-primary"
+            }`}
+            style={{
+              height: isTablet ? 60 : 48,
+            }}
             accessibilityRole="button"
             accessibilityLabel="Botão de acessar"
             accessibilityHint="Clique para fazer login"
@@ -147,7 +179,10 @@ export default function Index() {
             {mutation.isPending ? (
               <ActivityIndicator size="small" color="#ffffff" />
             ) : (
-              <Text className="text-center text-white font-zona-bold">
+              <Text
+                className="text-center text-white font-zona-bold"
+                style={{ fontSize: isTablet ? width * 0.045 : width * 0.035 }}
+              >
                 Acessar
               </Text>
             )}
@@ -157,13 +192,13 @@ export default function Index() {
             <TouchableOpacity
               className="mt-4"
               accessibilityRole="link"
-              accessibilityLabel="Acesse como administrador"
-              accessibilityHint="Clique para acessar como administrador"
+              accessibilityLabel="Acesse como usuário"
+              accessibilityHint="Clique para acessar como usuário"
               activeOpacity={0.8}
             >
               <Text
                 className="text-zinc-400 text-sm font-zona-regular"
-                style={{ fontSize: width * 0.035 }}
+                style={{ fontSize: isTablet ? width * 0.04 : width * 0.035 }}
               >
                 Acesse como usuário
               </Text>

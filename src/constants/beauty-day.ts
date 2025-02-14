@@ -2,6 +2,7 @@ export const beautyDay = {
   title: "Beauty Day",
   thumbnail: "https://img.youtube.com/vi/-r2aG5L2BA0/hqdefault.jpg",
   videoId: "-r2aG5L2BA0",
+  videoIdSpanish: "bsLOoKdVdX0",
   links: [
     {
       name: "beauty-day-1.png",

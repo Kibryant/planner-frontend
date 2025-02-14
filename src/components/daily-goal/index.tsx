@@ -106,7 +106,7 @@ export function DailyGoal({
     ? `${Number(dailyGoal).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
-      })} Por dia`
+      })} ${t("Por dia")}`
     : "Clique para adicionar a sua meta diária";
 
   return (

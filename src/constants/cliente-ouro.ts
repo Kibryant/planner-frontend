@@ -2,6 +2,7 @@ export const clienteOuro = {
   title: "Cliente Ouro",
   thumbnail: "https://img.youtube.com/vi/eLseDL7AEww/hqdefault.jpg",
   videoId: "eLseDL7AEww",
+  videoIdSpanish: "K7f_zF5KOEY",
   links: [
     {
       name: "cliente-ouro-feed.png",

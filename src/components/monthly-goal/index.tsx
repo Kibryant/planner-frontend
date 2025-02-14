@@ -38,7 +38,7 @@ export function MonthlyGoal({
       ? `${Number(monthlyGoal).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
-        })} Por mês`
+        })} ${t("Por mês")}`
       : "Clique para adicionar a meta do mês";
 
   const openModal = () => {

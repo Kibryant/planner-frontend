@@ -3,6 +3,8 @@ export const corteTerapeutico = {
   thumbnail: "https://img.youtube.com/vi/R5kYioh2g4I/hqdefault.jpg",
   stepByStepVideoId: "magJ_cYllvk",
   videoId: "R5kYioh2g4I",
+  videoIdSpanish: "PT_U8paaOTQ",
+  stepByStepVideoIdSpanish: "-rloPH0TVUY",
   links: [
     {
       name: "corte-terapeutico-1-feed.png",

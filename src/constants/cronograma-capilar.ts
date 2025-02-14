@@ -2,6 +2,7 @@ export const cronogramaCapilar = {
   title: "Cronograma Capilar",
   thumbnail: "https://img.youtube.com/vi/6DIun0n68qw/hqdefault.jpg",
   videoId: "6DIun0n68qw",
+  videoIdSpanish: "o5R9c7Kl-Xc",
   links: [
     {
       name: "cronograma-capilar-1.png",
