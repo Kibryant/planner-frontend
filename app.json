@@ -46,7 +46,8 @@
           "isAccessMediaLocationEnabled": true
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      "expo-video"
     ],
     "experiments": {
       "typedRoutes": true
