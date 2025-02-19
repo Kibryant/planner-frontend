@@ -57,13 +57,13 @@ export default function Index() {
           </View>
 
           <Text
-            className="text-white text-2xl font-zona-bold mb-2"
+            className="text-white font-zona-bold mb-2"
             style={{ fontSize: isTablet ? width * 0.08 : width * 0.06 }}
           >
             {t("Boas vindas")}!
           </Text>
           <Text
-            className="text-gray-400 mb-6 text-lg font-zona-regular text-center"
+            className="text-gray-400 mb-6 font-zona-regular text-center"
             style={{ fontSize: isTablet ? width * 0.045 : width * 0.035 }}
           >
             {t("Faça seu login para acessar o planner")}
@@ -80,7 +80,7 @@ export default function Index() {
               activeOpacity={0.8}
             >
               <Text
-                className="text-gray-400 text-sm font-zona-regular"
+                className="text-gray-400 font-zona-regular"
                 style={{ fontSize: isTablet ? width * 0.04 : width * 0.035 }}
               >
                 {t("Acesse como administrador")}

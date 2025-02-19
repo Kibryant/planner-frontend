@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import * as FileSystem from "expo-file-system";
 import { type Tip, TIPS } from "@/constants/tips";
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -24,6 +24,12 @@ export const useShare = ({ index }: UseShareProps) => {
     ScreenOrientation.lockAsync(orientationLock);
   }, []);
 
+  useEffect(() => {
+    return () => {
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    };
+  }, []);
+
   const saveToGallery = async (fileUrl: string, fileName: string) => {
     const { status } = await MediaLibrary.requestPermissionsAsync();
 
@@ -40,10 +46,29 @@ export const useShare = ({ index }: UseShareProps) => {
 
     try {
       const documentDirectory = FileSystem.documentDirectory;
-      if (!documentDirectory) throw new Error("Document directory is not available");
+
+      if (!documentDirectory) {
+        Toast.show({
+          type: "error",
+          text1: "Erro de diretório",
+          text2: "O diretório de documentos não está disponível",
+        });
+        return;
+      }
 
       const fileUri = `${documentDirectory}${fileName}`;
+      
       const downloadResult = await FileSystem.downloadAsync(fileUrl, fileUri);
+
+      if (!downloadResult.uri) {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao baixar o arquivo",
+          text2: "O arquivo não foi baixado corretamente",
+        });
+        return;
+      }
+
       await MediaLibrary.saveToLibraryAsync(downloadResult.uri);
 
       Toast.show({
@@ -52,6 +77,7 @@ export const useShare = ({ index }: UseShareProps) => {
         text2: "O arquivo foi salvo na galeria com sucesso",
       });
     } catch (error) {
+      console.error("Erro ao salvar na galeria:", error);
       Toast.show({
         type: "error",
         text1: "Erro ao salvar na galeria",

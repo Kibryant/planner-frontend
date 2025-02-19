@@ -2,7 +2,7 @@
   "expo": {
     "name": "Planner Mecha Turbo",
     "slug": "planner-frontend",
-    "version": "1.0.50",
+    "version": "1.0.53",
     "orientation": "portrait",
     "icon": "./public/icon.png",
     "scheme": "planner-mecha-turbo",
@@ -41,8 +41,8 @@
       [
         "expo-media-library",
         {
-          "photosPermission": "Você precisa permitir o acesso às fotos para poder adicionar imagens ao seu plano de estudos.",
-          "savePhotosPermission": "Você precisa permitir o acesso às fotos para poder adicionar imagens ao seu plano de estudos.",
+          "photosPermission": "Você precisa permitir o acesso às fotos para poder adicionar imagens/vídeos ao seu plano de estudos.",
+          "savePhotosPermission": "Você precisa permitir o acesso às fotos para poder adicionar imagens/vídeos ao seu plano de estudos.",
           "isAccessMediaLocationEnabled": true
         }
       ],
