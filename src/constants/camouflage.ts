@@ -14,7 +14,7 @@ export const camouflage = {
       url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/camuflagem%2Fcamuflagem-2-story.jpg?alt=media&token=7a5b0e2e-3f8b-4b2b-8e0f-1c5d4b5f1a5e",
     },
     {
-      name: "camuflagem-3-story.mp4",
+      name: "video1.mp4",
       url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/camuflagem%2Fcamuflagem-3-story.mp4?alt=media&token=5e5f1f9e-8d0d-4f1e-9b3b-9f7e8c9f7b8b",
     },
     {
