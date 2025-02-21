@@ -21,6 +21,7 @@ export interface Tip {
   links: {
     name: string;
     url: string;
+    isVideo?: boolean;
   }[];
 }
 
@@ -81,12 +82,14 @@ export const TIPS: Tip[] = [
         url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/iluminus-in-seven%2Filuminus-in-7-1-story.png?alt=media&token=2f6d4c5d-6d8f-4f8e-9b1b-0a5a6d4a0c7b",
       },
       {
-        name: "video2.mp4",
+        name: "iluminus-in-7-1.mp4",
         url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/iluminus-in-seven%2Filuminus-in-7-2.mp4?alt=media&token=8f7f1e7b-5b7e-4d3b-8b7b-6f7e4b6e5d0a",
+        isVideo: true,
       },
       {
-        name: "video3.mp4",
+        name: "iluminus-in-7-2.mp4",
         url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/iluminus-in-seven%2Filuminus-in-7-3.mp4?alt=media&token=5b0f9e9b-4f2b-4c1a-8b7c-4e7b6e5d0a",
+        isVideo: true,
       },
       {
         name: "iluminus-in-7-carrossel-1.jpg",

@@ -22,22 +22,22 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatListType>(null);
 
-  const downloadLink = useCallback(() => {
-    MediaLibrary.requestPermissionsAsync().then(({ status }) => {
-      if (status !== "granted") {
-        Toast.show({
-          type: "error",
-          text1: "Permissão negada",
-          text2: "Você precisa permitir o acesso à galeria para salvar o arquivo",
-        });
-        return;
-      }
-    });
-
+  const downloadLink = useCallback(async () => {
+    const { status } = await MediaLibrary.requestPermissionsAsync();
+  
+    if (status !== "granted") {
+      Toast.show({
+        type: "error",
+        text1: "Permissão negada",
+        text2: "Você precisa permitir o acesso à galeria para salvar o arquivo",
+      });
+      return;
+    }
+  
     const { url, name } = links[currentIndex];
-
+  
     const fileSystem = FileSystem.documentDirectory;
-
+  
     if (!fileSystem) {
       Toast.show({
         type: "error",
@@ -46,48 +46,53 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
       });
       return;
     }
-
+  
     setIsDownloading(true);
+  
+    try {
+      const fileUri = fileSystem + name;
+  
+      const downloadResult = await FileSystem.downloadAsync(url, fileUri);
 
-    FileSystem.downloadAsync(url, fileSystem + name)
-      .then(({ uri }) => {
-        if (!uri) {
-          Toast.show({
-            type: "error",
-            text1: "Erro ao baixar o arquivo",
-            text2: "O arquivo não foi baixado corretamente",
-          });
-          return;
-        }
+      console.log(downloadResult.mimeType)
+  
+      const fileInfo = await FileSystem.getInfoAsync(downloadResult.uri);
 
-        MediaLibrary.saveToLibraryAsync(uri)
-          .then(() => {
-            Toast.show({
-              type: "success",
-              text1: "Salvo na galeria",
-              text2: "O arquivo foi salvo na galeria com sucesso",
-            });
-          })
-          .catch((error) => {
-            console.error("Erro ao salvar na galeria:", error);
-            Toast.show({
-              type: "error",
-              text1: "Erro ao salvar na galeria",
-              text2: "Ocorreu um erro ao salvar o arquivo na galeria",
-            });
-          });
-      })
-      .catch((error) => {
-        console.error("Erro ao baixar:", error);
+      if (!fileInfo.exists || fileInfo.size === 0) {
         Toast.show({
           type: "error",
           text1: "Erro ao baixar",
-          text2: "Ocorreu um erro ao baixar o arquivo",
+          text2: "O arquivo está vazio ou não foi baixado corretamente",
         });
-      })
-      .finally(() => {
-        setIsDownloading(false);
+        return;
+      }
+    
+      try {  
+        await MediaLibrary.saveToLibraryAsync(downloadResult.uri);
+  
+        Toast.show({
+          type: "success",
+          text1: "Salvo na galeria",
+          text2: "O arquivo foi salvo na galeria com sucesso",
+        });
+      } catch (error) {
+        console.error("Erro ao criar ativo ou salvar na galeria:", error);
+        Toast.show({
+          type: "error",
+          text1: "Erro ao salvar",
+          text2: "O arquivo não é um tipo de mídia suportado",
+        });
+      }
+    } catch (error) {
+      console.error("Erro ao baixar ou salvar o arquivo:", error);
+      Toast.show({
+        type: "error",
+        text1: "Erro ao baixar",
+        text2: "Ocorreu um erro ao baixar o arquivo",
       });
+    } finally {
+      setIsDownloading(false);
+    }
   }, [currentIndex, links]);
 
   const onViewableItemsChanged = useCallback(
