@@ -103,5 +103,11 @@
     "Por mês": "Por mes",
     "Por dia": "Por día",
     "O e-mail é inválido": "El correo electrónico no es válido",
-    "A senha deve ter no mínimo 4 caracteres": "La contraseña debe tener al menos 4 caracteres"
+    "A senha deve ter no mínimo 4 caracteres": "La contraseña debe tener al menos 4 caracteres",
+    "Salvo na galeria": "Guardado en la galería",
+    "Erro ao salvar": "Error al guardar",
+    "O arquivo foi salvo na galeria com sucesso": "El archivo se ha guardado en la galería con éxito",
+    "Ocorreu um erro ao salvar o arquivo na galeria": "Se ha producido un error al guardar el archivo en la galería",
+    "Permissão negada": "Permiso denegado",
+    "É necessário permitir o acesso à galeria para salvar o arquivo": "Es necesario permitir el acceso a la galería para guardar el archivo"
 }

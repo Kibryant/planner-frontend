@@ -1,8 +1,10 @@
 export const flashBlond = {
   title: "Flash Blond",
   thumbnail: "https://img.youtube.com/vi/H6WFsji_iJU/hqdefault.jpg",
+  thumbnailSpanish: "https://img.youtube.com/vi/z7hR1bZBu94/hqdefault.jpg",
   videoId: "H6WFsji_iJU",
   stepByStepVideoId: "6GVqB-ex8qM",
+  stepByStepVideoIdSpanish: "XKOsAPb-zRM",
   videoIdSpanish: "z7hR1bZBu94",
   links: [
     {
@@ -70,4 +72,70 @@ export const flashBlond = {
       url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/flash-blond%2Fcarrossel%2Fcarrossel-flash-blond-8.jpg?alt=media&token=ae6c5b5f-95d9-4822-9365-6d68a8696330",
     },
   ],
+  linksSpanish: [
+    {
+        name: "flash-blond-feed-1.png",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fpost-1.png?alt=media&token=dfda76e5-7ed7-4edc-8cbe-f5032cd13f9e"
+    },
+    {
+        name: "flash-blond-feed-2.png",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fpost-2.png?alt=media&token=dfda76e5-7ed7-4edc-8cbe-f5032cd13f9e"
+    },
+    {
+        name: "flash-blond-feed-3.png",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fpost-3.png?alt=media&token=dfda76e5-7ed7-4edc-8cbe-f5032cd13f9e"
+    },
+    {
+        name: "flash-blond-feed-4.png",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fpost-4.png?alt=media&token=dfda76e5-7ed7-4edc-8cbe-f5032cd13f9e"
+    },
+    {
+        name: "flash-blond-feed-5.png",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fpost-5.png?alt=media&token=dfda76e5-7ed7-4edc-8cbe-f5032cd13f9e"
+    },
+    {
+        name: "flash-blond-feed-6.png",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fpost-6.png?alt=media&token=dfda76e5-7ed7-4edc-8cbe-f5032cd13f9e"
+    },
+    {
+        name: "flash-blond-story-1.png",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fstory-1.png?alt=media&token=d1e0c648-0ac1-45a1-bd93-e569eeb846ff",
+    },
+    {
+        name: "flash-blond-story-2.png",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fstory-2.png?alt=media&token=d1e0c648-0ac1-45a1-bd93-e569eeb846ff",
+    },
+    {
+        name: "carrusel-flash-blond-1.jpg",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fcarrossel%2F1.jpg?alt=media&token=b62b4505-7b9e-4ee3-85f1-7e52413958b3"
+    },
+    {
+        name: "carrusel-flash-blond-2.jpg",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fcarrossel%2F2.jpg?alt=media&token=b62b4505-7b9e-4ee3-85f1-7e52413958b3"
+    },
+    {
+        name: "carrusel-flash-blond-3.jpg",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fcarrossel%2F3.jpg?alt=media&token=b62b4505-7b9e-4ee3-85f1-7e52413958b3"
+    },
+    {
+        name: "carrusel-flash-blond-4.jpg",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fcarrossel%2F4.jpg?alt=media&token=b62b4505-7b9e-4ee3-85f1-7e52413958b3"
+    },
+    {
+        name: "carrusel-flash-blond-5.jpg",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fcarrossel%2F5.jpg?alt=media&token=b62b4505-7b9e-4ee3-85f1-7e52413958b3"
+    },
+    {
+        name: "carrusel-flash-blond-6.jpg",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fcarrossel%2F6.jpg?alt=media&token=b62b4505-7b9e-4ee3-85f1-7e52413958b3"
+    },
+    {
+        name: "carrusel-flash-blond-7.jpg",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fcarrossel%2F7.jpg?alt=media&token=b62b4505-7b9e-4ee3-85f1-7e52413958b3"
+    },
+    {
+        name: "carrusel-flash-blond-8.jpg",
+        url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Fflash-blond%2Fcarrossel%2F8.jpg?alt=media&token=b62b4505-7b9e-4ee3-85f1-7e52413958b3"
+    },
+  ]
 };

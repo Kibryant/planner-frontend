@@ -9,6 +9,7 @@ import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import Toast from "react-native-toast-message";
 import { SLIDE_WIDTH } from "@/constants/slide-width";
+import { useTranslation } from "react-i18next";
 
 interface UseCarouselProps {
   links: {
@@ -18,6 +19,7 @@ interface UseCarouselProps {
 }
 
 export const useCarousel = ({ links }: UseCarouselProps) => {
+    const { t, i18n } = useTranslation();
   const [isDownloading, setIsDownloading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatListType>(null);
@@ -72,8 +74,8 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
   
         Toast.show({
           type: "success",
-          text1: "Salvo na galeria",
-          text2: "O arquivo foi salvo na galeria com sucesso",
+          text1: t("Salvo na galeria"),
+          text2: t("O arquivo foi salvo na galeria com sucesso")
         });
       } catch (error) {
         console.error("Erro ao criar ativo ou salvar na galeria:", error);
@@ -87,13 +89,13 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
       console.error("Erro ao baixar ou salvar o arquivo:", error);
       Toast.show({
         type: "error",
-        text1: "Erro ao baixar",
-        text2: "Ocorreu um erro ao baixar o arquivo",
+        text1: t("Erro ao salvar"),
+        text2: t("Ocorreu um erro ao salvar o arquivo na galeria"),
       });
     } finally {
       setIsDownloading(false);
     }
-  }, [currentIndex, links]);
+  }, [currentIndex, links, t]);
 
   const onViewableItemsChanged = useCallback(
     (event: { viewableItems: ViewToken[] }) => {

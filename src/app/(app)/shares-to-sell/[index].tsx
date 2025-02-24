@@ -17,12 +17,10 @@ import { Carousel } from "@/components/carousel";
 import { DownloadIconTurned } from "@/components/icons/download-icon-turned";
 import { HomeIcon } from "@/components/icons/home-icon";
 import { useShare } from "@/hooks/useShare";
-import { useTranslation } from "react-i18next";
 
 const screenHeight = Dimensions.get("screen").height;
 
 export default function Share() {
-	const { t } = useTranslation();
 	const { index } = useLocalSearchParams();
 
 	const indexString = Array.isArray(index) ? index[0] : index;
@@ -30,6 +28,8 @@ export default function Share() {
 	const indexNumber = Number.parseInt(indexString, 10);
 
 	const {
+        t,
+        i18n,
 		isVideoReady,
 		isStepByStepVideoReady,
 		isDownloading,
@@ -62,7 +62,7 @@ export default function Share() {
 						}}
 					>
 						<YoutubeIframe
-							videoId={tip.videoId}
+							videoId={i18n.language === "es" ? tip.videoIdSpanish : tip.videoId}
 							onFullScreenChange={onFullScreenChange}
 							height={200}
 							width={340}
@@ -106,7 +106,7 @@ export default function Share() {
 							</TouchableOpacity>
 						</LinearGradient>
 
-						<Carousel links={tip.links} />
+						<Carousel links={i18n.language === "es" ? tip.linksSpanish : tip.links} />
 					</View>
 
 					{tip.stepByStepVideoId && (
@@ -124,7 +124,7 @@ export default function Share() {
 								}}
 							>
 								<YoutubeIframe
-									videoId={tip.stepByStepVideoId}
+									videoId={i18n.language === "es" ? tip.stepByStepVideoIdSpanish : tip.stepByStepVideoId}
 									onFullScreenChange={onFullScreenChange}
 									height={200}
 									width={340}

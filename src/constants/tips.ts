@@ -16,13 +16,21 @@ import { whatsappDeOuro } from "./whatsapp-de-ouro";
 export interface Tip {
   title: string;
   thumbnail: string;
+  thumbnailSpanish?: string;
   videoId: string;
+    videoIdSpanish?: string;
   stepByStepVideoId?: string;
+  stepByStepVideoIdSpanish?: string;
   links: {
     name: string;
     url: string;
     isVideo?: boolean;
   }[];
+    linksSpanish: {
+        name: string;
+        url: string;
+        isVideo?: boolean;
+    }[];
 }
 
 export const TIPS: Tip[] = [
@@ -71,7 +79,9 @@ export const TIPS: Tip[] = [
   {
     title: "Iluminus in 7",
     thumbnail: "https://i.ytimg.com/vi/VGMyq-V7CP8/hqdefault.jpg",
+    thumbnailSpanish: "https://i.ytimg.com/vi/wfTOCb-Kiss/hqdefault.jpg",
     videoId: "VGMyq-V7CP8",
+    videoIdSpanish: "wfTOCb-Kiss",
     links: [
       {
         name: "iluminus-in-7-feed.png",
@@ -111,6 +121,46 @@ export const TIPS: Tip[] = [
         name: "iluminus-in-7-carrossel-5.jpg",
         url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/iluminus-in-seven%2Fcarrossel%2F5.jpg?alt=media&token=4d6dd93b-3e02-4549-8226-0edc095da058",
       },
+    ],
+    linksSpanish: [
+        {
+            name: "iluminus-in-7-feed.png",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fspanish%2Ffeed.png?alt=media&token=f0e2c556-cb92-4fc3-ab99-858f045d14f2",
+        },
+        {
+            name: "iluminus-in-7-story.png",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fspanish%2Fstory.png?alt=media&token=2f6d4c5d-6d8f-4f8e-9b1b-0a5a6d4a0c7b",
+        },
+        {
+            name: "iluminus-in-7-1.mp4",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fvideo-1.mp4?alt=media&token=43df0a5d-d5b0-490c-8f1b-4e210b4e578f",
+            isVideo: true,
+        },
+        {
+            name: "iluminus-in-7-2.mp4",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fvideo-2.mp4?alt=media&token=43df0a5d-d5b0-490c-8f1b-4e210b4e578f",
+            isVideo: true,
+        },
+        {
+            name: "iluminus-in-7-carrusel-1.png",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fcarrossel%2F1.png?alt=media&token=fce36fd9-4fca-41dc-8926-cbf0bb2ac952",
+        },
+        {
+            name: "iluminus-in-7-carrusel-2.png",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fcarrossel%2F2.png?alt=media&token=fce36fd9-4fca-41dc-8926-cbf0bb2ac952",
+        },
+        {
+            name: "iluminus-in-7-carrusel-3.png",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fcarrossel%2F3.png?alt=media&token=fce36fd9-4fca-41dc-8926-cbf0bb2ac952",
+        },
+        {
+            name: "iluminus-in-7-carrusel-4.png",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fcarrossel%2F4.png?alt=media&token=fce36fd9-4fca-41dc-8926-cbf0bb2ac952",
+        },
+        {
+            name: "iluminus-in-7-carrusel-5.png",
+            url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/espanhol%2Filuminus-in-seven%2Fcarrossel%2F5.png?alt=media&token=fce36fd9-4fca-41dc-8926-cbf0bb2ac",
+        }
     ],
   },
 ];

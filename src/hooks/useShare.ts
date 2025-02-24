@@ -4,12 +4,14 @@ import { type Tip, TIPS } from "@/constants/tips";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as MediaLibrary from "expo-media-library";
 import Toast from "react-native-toast-message";
+import { useTranslation } from "react-i18next";
 
 interface UseShareProps {
   index: string;
 }
 
 export const useShare = ({ index }: UseShareProps) => {
+        const { t, i18n } = useTranslation();
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [isStepByStepVideoReady, setIsStepByStepVideoReady] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -36,8 +38,8 @@ export const useShare = ({ index }: UseShareProps) => {
     if (status !== "granted") {
       Toast.show({
         type: "error",
-        text1: "Permissão negada",
-        text2: "Você precisa permitir o acesso à galeria para salvar o arquivo",
+        text1: t("Permissão negada"),
+        text2: t("É necessário permitir o acesso à galeria para salvar o arquivo"),
       });
       return;
     }
@@ -73,15 +75,15 @@ export const useShare = ({ index }: UseShareProps) => {
 
       Toast.show({
         type: "success",
-        text1: "Salvo na galeria",
-        text2: "O arquivo foi salvo na galeria com sucesso",
+        text1: t("Salvo na galeria"),
+        text2: t("O arquivo foi salvo na galeria com sucesso"),
       });
     } catch (error) {
       console.error("Erro ao salvar na galeria:", error);
       Toast.show({
         type: "error",
-        text1: "Erro ao salvar na galeria",
-        text2: "Ocorreu um erro ao salvar o arquivo na galeria",
+        text1: t("Erro ao salvar"),
+        text2: t("Ocorreu um erro ao salvar o arquivo na galeria"),
       });
     } finally {
       setIsDownloading(false);
@@ -95,6 +97,8 @@ export const useShare = ({ index }: UseShareProps) => {
   };
 
   return {
+    t,
+    i18n,
     isVideoReady,
     isStepByStepVideoReady,
     isDownloading,

@@ -100,4 +100,5 @@ export const arraiaBeauty = {
       url: "https://firebasestorage.googleapis.com/v0/b/planner-mecha-turbo.firebasestorage.app/o/arraia-beauty%2Farraia-beauty-3-story.png?alt=media&token=c046195c-86c6-4bad-8982-217badd7d9a3",
     },
   ],
+  linksSpanish: [],
 };
