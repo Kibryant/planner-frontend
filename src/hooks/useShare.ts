@@ -50,12 +50,12 @@ export const useShare = ({ index }: UseShareProps) => {
       const documentDirectory = FileSystem.documentDirectory;
 
       if (!documentDirectory) {
-        Toast.show({
-          type: "error",
-          text1: "Erro de diretório",
-          text2: "O diretório de documentos não está disponível",
-        });
-        return;
+      Toast.show({
+        type: "error",
+        text1: t("Erro de diretório"),
+        text2: t("O diretório de documentos não está disponível"),
+      });
+      return;
       }
 
       const fileUri = `${documentDirectory}${fileName}`;
@@ -65,8 +65,8 @@ export const useShare = ({ index }: UseShareProps) => {
       if (!downloadResult.uri) {
         Toast.show({
           type: "error",
-          text1: "Erro ao baixar o arquivo",
-          text2: "O arquivo não foi baixado corretamente",
+          text1: t("Erro ao baixar"),
+          text2: t("O arquivo está vazio ou não foi baixado corretamente"),
         });
         return;
       }

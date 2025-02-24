@@ -19,7 +19,7 @@ interface UseCarouselProps {
 }
 
 export const useCarousel = ({ links }: UseCarouselProps) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
   const [isDownloading, setIsDownloading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatListType>(null);
@@ -30,8 +30,8 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
     if (status !== "granted") {
       Toast.show({
         type: "error",
-        text1: "Permissão negada",
-        text2: "Você precisa permitir o acesso à galeria para salvar o arquivo",
+        text1: t("Permissão negada"),
+        text2: t("É necessário permitir o acesso à galeria para salvar o arquivo"),
       });
       return;
     }
@@ -43,8 +43,8 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
     if (!fileSystem) {
       Toast.show({
         type: "error",
-        text1: "Erro de diretório",
-        text2: "O diretório de documentos não está disponível",
+        text1: t("Erro de diretório"),
+        text2: t("O diretório de documentos não está disponível"),
       });
       return;
     }
@@ -63,8 +63,8 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
       if (!fileInfo.exists || fileInfo.size === 0) {
         Toast.show({
           type: "error",
-          text1: "Erro ao baixar",
-          text2: "O arquivo está vazio ou não foi baixado corretamente",
+          text1: t("Erro ao baixar"),
+          text2: t("O arquivo está vazio ou não foi baixado corretamente"),
         });
         return;
       }
@@ -81,8 +81,8 @@ export const useCarousel = ({ links }: UseCarouselProps) => {
         console.error("Erro ao criar ativo ou salvar na galeria:", error);
         Toast.show({
           type: "error",
-          text1: "Erro ao salvar",
-          text2: "O arquivo não é um tipo de mídia suportado",
+          text1: t("Erro ao salvar"),
+          text2: t("O arquivo não é um tipo de mídia suportado"),
         });
       }
     } catch (error) {

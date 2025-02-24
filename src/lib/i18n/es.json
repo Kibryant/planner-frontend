@@ -109,5 +109,10 @@
     "O arquivo foi salvo na galeria com sucesso": "El archivo se ha guardado en la galería con éxito",
     "Ocorreu um erro ao salvar o arquivo na galeria": "Se ha producido un error al guardar el archivo en la galería",
     "Permissão negada": "Permiso denegado",
-    "É necessário permitir o acesso à galeria para salvar o arquivo": "Es necesario permitir el acceso a la galería para guardar el archivo"
+    "É necessário permitir o acesso à galeria para salvar o arquivo": "Es necesario permitir el acceso a la galería para guardar el archivo",
+    "Erro de diretório": "Error de directorio",
+    "O diretório de documentos não está disponível": "Se ha producido un error al acceder al directorio de imágenes",
+    "Erro ao baixar": "Error al descargar",
+    "O arquivo está vazio ou não foi baixado corretamente": "El archivo está vacío o no se ha descargado correctamente",
+    "O arquivo não é um tipo de mídia suportado": "El archivo no es un tipo de medio compatible"
 }
